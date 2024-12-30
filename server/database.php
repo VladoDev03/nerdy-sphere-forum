@@ -1,4 +1,5 @@
 <?php
+require_once 'Category.php';
 const DB_HOST = 'localhost';
 const DB_USER = 'root';
 const DB_PASS = 'T0rta@s@marmaladi7';
@@ -11,3 +12,5 @@ if ($connection->connect_error) {
 }
 
 echo 'Connected successfully';
+
+//echo Category::Comics->name;
