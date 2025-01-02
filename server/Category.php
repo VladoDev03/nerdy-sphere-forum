@@ -1,17 +1,17 @@
 <?php
 
-enum Category
+enum Category: string
 {
-    case VideoGames;
-    case Books;
-    case Manga;
-    case Comics;
-    case Anime;
-    case Cartoons;
-    case Animations;
-    case BoardGames;
-    case Music;
-    case Puzzles;
-    case Movies;
-    case Series;
+    case VIDEO_GAMES = 'Video Games';
+    case BOOKS = 'Books';
+    case MANGA = 'Manga';
+    case COMICS = 'Comics';
+    case ANIME = 'Anime';
+    case CARTOONS = 'Cartoons';
+    case ANIMATIONS = 'Animations';
+    case BOARD_GAMES = 'Board Games';
+    case MUSIC = 'Music';
+    case PUZZLES = 'Puzzles';
+    case MOVIES = 'Movies';
+    case SERIES = 'Series';
 }
