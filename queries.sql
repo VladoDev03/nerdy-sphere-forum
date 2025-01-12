@@ -65,6 +65,12 @@ CREATE TABLE post_image (
     FOREIGN KEY (post_id) REFERENCES post(id) ON DELETE CASCADE
 );
 
+INSERT INTO user (email, username, first_name, last_name, password_hash, created_at)
+VALUES
+    ('user1@example.com', 'user1', 'John', 'Doe', '$2y$10$EXAMPLESaltAndHash1', NOW()),
+    ('user2@example.com', 'user2', 'Jane', 'Smith', '$2y$10$EXAMPLESaltAndHash2', NOW()),
+    ('user3@example.com', 'user3', 'Alice', 'Johnson', '$2y$10$EXAMPLESaltAndHash3', NOW());
+
 SELECT * FROM user;
 SELECT * FROM post;
 SELECT * FROM comment;

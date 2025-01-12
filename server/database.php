@@ -1,16 +1,14 @@
 <?php
-require_once 'Category.php';
+
 const DB_HOST = 'localhost';
 const DB_USER = 'root';
 const DB_PASS = 'T0rta@s@marmaladi7';
-const DB_NAME = 'feedback_tutorial';
+const DB_NAME = 'nerdy_sphere_forum';
 
-$connection = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+$conn = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 
-if ($connection->connect_error) {
-    die('Connection failed: ' . $connection->connect_error);
+if (!$conn) {
+    die('Connection failed: ' . mysqli_connect_error());
 }
 
-echo 'Connected successfully';
-
-//echo Category::Comics->name;
+echo 'Connected successfully' . PHP_EOL;
