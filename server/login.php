@@ -16,6 +16,7 @@ if (isset($_SESSION["user"])) {
 </head>
 <body>
 <div class="container">
+    <h1>Login to Your Account</h1>
     <form action="login.php" method="POST">
         <div class="form-group">
             <label for="username_or_email">Email or Username:</label>
@@ -27,6 +28,9 @@ if (isset($_SESSION["user"])) {
         </div>
         <button type="submit">Login</button>
     </form>
+    <div class="register-link">
+        <p>Don't have an account? <a href="register.php">Register here</a></p>
+    </div>
 </div>
 </body>
 </html>

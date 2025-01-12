@@ -20,17 +20,18 @@ CREATE TABLE post (
     content VARCHAR(255) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     category ENUM(
-        'VideoGames',
+        'Video Games',
         'Books',
         'Manga',
         'Comics',
         'Anime',
         'Cartoons',
         'Animations',
-        'BoardGames',
+        'Board Games',
         'Music',
         'Puzzles',
         'Movies',
+        'Card Games',
         'Series'
     ) NOT NULL,
     user_id INT NOT NULL,
@@ -76,3 +77,11 @@ SELECT * FROM post;
 SELECT * FROM comment;
 SELECT * FROM comment_tag;
 SELECT * FROM post_image;
+
+SET SQL_SAFE_UPDATES = 0;
+DELETE FROM user;
+DELETE FROM post;
+DELETE FROM comment;
+DELETE FROM comment_tag;
+DELETE FROM post_image;
+SET SQL_SAFE_UPDATES = 1;

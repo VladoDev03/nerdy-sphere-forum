@@ -11,11 +11,12 @@ if (isset($_SESSION["user"])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Register</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <div class="container">
+    <h1>Create New Account</h1>
     <form action="register.php" method="POST">
         <div class="form-group">
             <label for="email">Email:</label>
@@ -39,11 +40,13 @@ if (isset($_SESSION["user"])) {
         </div>
         <div class="form-group">
             <label for="repeat_password">Repeat Password:</label>
-            <input type="password" id="repeat_password" name="repeat_password" placeholder="Repeat your password"
-                   required>
+            <input type="password" id="repeat_password" name="repeat_password" placeholder="Repeat your password" required>
         </div>
         <button type="submit">Register</button>
     </form>
+    <div class="login-link">
+        <p>Already have an account? <a href="login.php">Login here</a></p>
+    </div>
 </div>
 </body>
 </html>
