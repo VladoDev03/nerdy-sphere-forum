@@ -110,9 +110,11 @@ SELECT * FROM comment_tag;
 SELECT * FROM post_image;
 
 SET SQL_SAFE_UPDATES = 0;
-DELETE FROM user;
 DELETE FROM post;
 DELETE FROM comment;
 DELETE FROM comment_tag;
 DELETE FROM post_image;
 SET SQL_SAFE_UPDATES = 1;
+
+DELETE FROM user
+WHERE username = 'vladsto';

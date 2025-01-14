@@ -57,6 +57,10 @@ input:focus {
     box-shadow: 0 0 5px rgba(108, 99, 255, 0.5);
 }
 
+.error-input {
+    color: red;
+}
+
 button[type="submit"] {
     background-color: #6c63ff;
     color: #ffffff;
