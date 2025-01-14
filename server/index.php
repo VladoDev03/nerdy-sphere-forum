@@ -1,8 +1,8 @@
 <?php
 session_start();
 
-if(!isset($_SESSION['user'])) {
-     header('Location: login.php');
+if (!isset($_SESSION['user'])) {
+    header('Location: login.php');
 }
 ?>
 
@@ -71,6 +71,23 @@ $posts = [
                     'content' => 'I appreciate your thoughts, it\'s a fascinating topic.',
                     'posted_at' => '2025-01-10 12:30'
                 ]
+            ],
+            [
+                'author' => 'user3',
+                'content' => 'This is such an amazing breakdown of the anime industry!',
+                'posted_at' => '2025-01-10 12:00',
+                'reply' => [
+                    [
+                        'author' => 'user2',
+                        'content' => 'I appreciate your thoughts, it\'s a fascinating topic.',
+                        'posted_at' => '2025-01-10 12:30'
+                    ],
+                    [
+                        'author' => 'user2',
+                        'content' => 'I appreciate your thoughts, it\'s a fascinating topic.',
+                        'posted_at' => '2025-01-10 12:30'
+                    ]
+                ]
             ]
         ]
     ]
@@ -82,157 +99,66 @@ $posts = [
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nerdy Sphere Forum</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f9;
-            color: #333;
-        }
-
-        .navbar {
-            background-color: #333;
-            overflow: hidden;
-        }
-
-        .navbar a {
-            float: right;
-            display: block;
-            color: white;
-            text-align: center;
-            padding: 14px 20px;
-            text-decoration: none;
-        }
-
-        .navbar a:hover {
-            background-color: #ddd;
-            color: black;
-        }
-
-        h1 {
-            text-align: center;
-            margin-top: 20px;
-        }
-
-        .post {
-            background-color: #fff;
-            padding: 20px;
-            margin: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .post h2 {
-            font-size: 24px;
-            margin: 0;
-        }
-
-        .post p {
-            font-size: 16px;
-        }
-
-        .post-images img {
-            width: 100%;
-            max-width: 500px;
-            margin: 10px 0;
-            border-radius: 8px;
-        }
-
-        .comments {
-            margin-top: 20px;
-            border-top: 1px solid #ddd;
-            padding-top: 10px;
-        }
-
-        .comment {
-            padding: 10px;
-            margin-bottom: 15px;
-            border-bottom: 1px solid #eee;
-        }
-
-        .reply {
-            margin-left: 30px;
-            border-left: 2px solid #ddd;
-            padding-left: 10px;
-        }
-
-        .comment p {
-            margin: 5px 0;
-        }
-
-        form {
-            margin-top: 20px;
-        }
-
-        textarea {
-            width: 100%;
-            padding: 10px;
-            font-size: 16px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-
-        button {
-            padding: 10px 15px;
-            font-size: 16px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background-color: #0056b3;
-        }
-    </style>
+    <link rel="stylesheet" href="styles/index.css">
 </head>
 <body>
 
 <div class="navbar">
-    <a href="logout.php">Logout</a>
-    <a href="new_post.php">Create Post</a>
+    <div class="left-navigation">
+        <a class="nav-url" href="logout.php">Logout</a>
+    </div>
+    <h1 class="nav-title">NerdySphere_Forum</h1>
+    <div class="right-navigation">
+        <a class="nav-url" href="new_post.php">Create Post</a>
+        <a class="nav-url" href="profile.php">Profile</a>
+    </div>
 </div>
-
-<h1>Welcome to Nerdy Sphere Forum</h1>
 
 <?php foreach ($posts as $post): ?>
     <div class="post">
-        <h2><?= $post['title'] ?></h2>
-        <p><strong>Posted by:</strong> <?= $post['author'] ?> | <strong>Category:</strong> <?= $post['category'] ?> | <strong>Posted at:</strong> <?= $post['posted_at'] ?></p>
-        <p><?= $post['content'] ?></p>
+        <div class="post-body">
+            <p class="post-info">Posted by: <?= $post['author'] ?> | Category: <?= $post['category'] ?> | Posted at: <?= $post['posted_at'] ?></p>
+            <h2 class="title"><?= $post['title'] ?></h2>
+            <p class="content"><?= $post['content'] ?></p>
 
-        <?php if (isset($post['images'])): ?>
-            <div class="post-images">
-                <?php foreach ($post['images'] as $image): ?>
-                    <img src="<?= $image ?>" alt="Post Image">
-                <?php endforeach; ?>
-            </div>
-        <?php endif; ?>
+            <?php if (isset($post['images'])): ?>
+                <div class="post-images">
+                    <?php foreach ($post['images'] as $image): ?>
+                        <img class="image" src="<?= $image ?>" alt="Post Image">
+                    <?php endforeach; ?>
+                </div>
+            <?php endif; ?>
+        </div>
 
-        <h3>Comments:</h3>
-        <div class="comments">
+        <div class="comment-section">
             <?php foreach ($post['comments'] as $comment): ?>
                 <div class="comment">
-                    <p><strong><?= $comment['author'] ?>:</strong></p>
-                    <p><?= $comment['content'] ?></p>
-                    <p><small>Posted at: <?= $comment['posted_at'] ?></small></p>
+                    <p class="comment-user">user3:</p>
+                    <p class="comment-content">This is such an amazing breakdown of the anime industry!</p>
+                    <p class="comment-info">Posted at: 2025-01-10 12:00</p>
+                    <textarea class="reply-input" placeholder="Add a reply..."></textarea>
+                    <button class="submit-reply">Send Reply</button>
 
-                    <?php if (isset($comment['reply'])): ?>
-                        <div class="reply">
-                            <p><strong><?= $comment['reply']['author'] ?>:</strong></p>
-                            <p><?= $comment['reply']['content'] ?></p>
-                            <p><small>Posted at: <?= $comment['reply']['posted_at'] ?></small></p>
+                    <div class="comment-replies">
+                        <div class="comment-reply">
+                            <p class="comment-user">user2:</p>
+                            <p class="comment-content">I appreciate your thoughts, it's a fascinating topic.</p>
+                            <p class="comment-info">Posted at: 2025-01-10 12:30</p>
                         </div>
-                    <?php endif; ?>
+                        <div class="comment-reply">
+                            <p class="comment-user">user2:</p>
+                            <p class="comment-content">Another follow-up reply!</p>
+                            <p class="comment-info">Posted at: 2025-01-10 13:00</p>
+                        </div>
+                    </div>
                 </div>
+
             <?php endforeach; ?>
         </div>
 
         <form action="#">
-            <textarea name="comment_content" placeholder="Add a comment..." required></textarea><br>
-            <button type="submit">Submit Comment</button>
+            <textarea class="comment-input" placeholder="Add a comment..."></textarea>
+            <button class="submit-comment">Send Comment</button>
         </form>
     </div>
 <?php endforeach; ?>

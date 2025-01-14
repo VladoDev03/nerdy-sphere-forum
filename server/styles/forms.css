@@ -1,6 +1,12 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f4f9;
+    background-color: #f7f7f7;
     margin: 0;
     padding: 0;
     display: flex;
@@ -20,7 +26,7 @@ body {
     text-align: center;
 }
 
-.container h1 {
+.form-title {
     font-size: 28px;
     font-weight: bold;
     color: #444;
@@ -41,7 +47,8 @@ label {
 
 input[type="text"],
 input[type="email"],
-input[type="password"] {
+input[type="password"],
+textarea {
     width: 100%;
     padding: 10px;
     border: 1px solid #cccccc;
@@ -51,7 +58,8 @@ input[type="password"] {
     margin-top: 5px;
 }
 
-input:focus {
+input:focus,
+textarea:focus {
     border-color: #6c63ff;
     outline: none;
     box-shadow: 0 0 5px rgba(108, 99, 255, 0.5);
@@ -95,4 +103,8 @@ a:hover {
 .login-link, .register-link, .logout-link {
     text-align: center;
     margin-top: 20px;
+}
+
+.error-input {
+    margin-bottom: 35px;
 }

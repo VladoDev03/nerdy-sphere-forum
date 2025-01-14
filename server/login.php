@@ -53,11 +53,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="styles/forms.css">
 </head>
 <body>
 <div class="container">
-    <h1>Login to Your Account</h1>
+    <h1 class="form-title">Login to Your Account</h1>
 
     <?php if (count($errors) > 0): ?>
         <div class="error-input">

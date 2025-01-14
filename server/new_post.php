@@ -11,12 +11,12 @@ if(!isset($_SESSION['user'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>New Post</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="styles/forms.css">
 </head>
 <body>
 <div class="container">
-    <h1>Create a New Post</h1>
-    <form action="create_post.php" method="POST" enctype="multipart/form-data">
+    <h1 class="form-title">Create a New Post</h1>
+    <form action="new_post.php" method="POST" enctype="multipart/form-data">
         <div class="form-group">
             <label for="title">Title:</label>
             <input type="text" id="title" name="title" placeholder="Enter post title" required>

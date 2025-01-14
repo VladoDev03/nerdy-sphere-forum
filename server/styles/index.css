@@ -1,0 +1,133 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f7f7f7;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+}
+
+.navbar {
+    background-color: cornflowerblue;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.nav-url,
+.nav-title {
+    float: right;
+    display: block;
+    color: #333;
+    text-align: center;
+    padding: 14px 20px;
+    text-decoration: none;
+    font-weight: bolder;
+}
+
+.navbar a:hover {
+    color: #222;
+}
+
+.post {
+    border-radius: 10px;
+    padding: 20px;
+    margin: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+}
+
+.post-body,
+.comment-section {
+    margin-bottom: 25px;
+    border-bottom: 2px solid #333;
+}
+
+.content,
+.post-info {
+    margin: 10px 0;
+}
+
+.content {
+    font-weight: bold;
+    font-size: larger;
+}
+
+.image {
+    border-radius: 10px;
+    width: 100%;
+    max-width: 500px;
+    margin: 10px 0;
+}
+
+.comment,
+.comment-reply {
+    padding: 5px;
+    margin-bottom: 15px;
+}
+
+.comment-reply {
+    margin-left: 25px;
+    border-left: 2px solid;
+    margin-top: 10px;
+}
+
+.comment-content {
+    font-size: larger;
+    margin: 10px 0;
+}
+
+.comment-user,
+.reply-user {
+    font-weight: bold;
+}
+
+.post-info,
+.comment-info,
+.reply-info {
+    font-style: italic;
+}
+
+.comment-info,
+.reply-info {
+    font-size: small;
+}
+
+.comment-input,
+.reply-input {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.submit-comment,
+.submit-reply {
+    padding: 10px 15px;
+    font-size: 16px;
+    background-color: cornflowerblue;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    color: #f7f7f7;
+}
+
+.submit-comment:hover,
+.submit-reply:hover {
+    background-color: dodgerblue;
+}
+
+.reply-input,
+.submit-reply {
+    margin-left: 25px;
+}
+
+.reply-input {
+    margin-top: 10px;
+}
