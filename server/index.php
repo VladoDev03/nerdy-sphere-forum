@@ -171,8 +171,8 @@ $conn->close();
     </div>
     <h1 class="nav-title">NerdySphere_Forum</h1>
     <div class="right-navigation">
-        <a class="nav-url" href="new_post.php">Create Post</a>
         <a class="nav-url" href="profile.php">Profile</a>
+        <a class="nav-url" href="new_post.php">Create Post</a>
     </div>
 </div>
 
