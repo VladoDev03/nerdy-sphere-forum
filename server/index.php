@@ -150,9 +150,36 @@ foreach ($posts as $postIndex => $post) {
     $posts[$postIndex] = $post;
 }
 
-$conn->close();
-
 //echo json_encode($posts, JSON_PRETTY_PRINT);
+?>
+
+<?php
+require_once "database.php";
+
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    $input = file_get_contents('php://input');
+    $data = json_decode($input, true);
+
+    $content = $data['content'];
+    $postId = $data['postId'];
+    $userId = $data['userId'];
+
+    if ($userId !== $_SESSION['user_id']) {
+        exit();
+    }
+
+    $stmt = $conn->prepare("INSERT INTO comment (content, post_id, user_id) VALUES (?, ?, ?);");
+    $stmt->bind_param("sii", $content, $postId, $userId);
+
+    if ($stmt->execute()) {
+        exit();
+    } else {
+        $errors[] = "Something went wrong. Please try again later.";
+    }
+
+    $stmt->close();
+    $conn->close();
+}
 ?>
 
 <!DOCTYPE html>
@@ -162,6 +189,7 @@ $conn->close();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NerdySphere_Forum</title>
     <link rel="stylesheet" href="styles/index.css">
+    <script src="js/index.js" defer></script>
 </head>
 <body>
 
@@ -193,10 +221,12 @@ $conn->close();
             <?php endif; ?>
         </div>
 
-        <form class="comment-form" action="#">
-            <textarea class="comment-input" placeholder="Add a comment..."></textarea>
-            <button class="submit-comment">Send Comment</button>
+        <form class="comment-form" action="index.php" method="POST">
+            <textarea class="comment-input" name="comment-input" id="comment-input-<?= $post['id'] ?>"
+                      placeholder="Add a comment..."></textarea>
+            <button id="submit-comment-<?= $post['id'] ?>" class="submit-comment">Send Comment</button>
         </form>
+        <div id="response"></div>
 
         <?php if (count($post['comments']) > 0): ?>
             <div class="comment-section">
@@ -224,6 +254,8 @@ $conn->close();
         <?php endif; ?>
     </div>
 <?php endforeach; ?>
-
+<script>
+    const currentUserId = <?= $_SESSION['user_id'] ?>;
+</script>
 </body>
 </html>

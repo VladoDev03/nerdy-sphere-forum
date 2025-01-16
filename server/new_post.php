@@ -24,8 +24,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         $stmt = $conn->prepare("INSERT INTO post (title, content, category, user_id) VALUES (?, ?, ?, ?);");
         $stmt->bind_param("sssi", $title, $content, $category, $userId);
-        $stmt->execute();
-        $stmt->store_result();
 
         if ($stmt->execute()) {
             header("Location: index.php");

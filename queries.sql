@@ -90,7 +90,7 @@ VALUES
     ('Great insights! I agree with your perspective on the latest releases.', 1, 2, NOW()),
     ('I can\'t wait to see how these trends shape the industry!', 2, 1, NOW()),
     ('This is such an amazing breakdown of the anime industry!', 3, 3, NOW()),
-    ('This is sad. My PC will not be able to run new games :(', 7, 1, NOW());
+    ('This is sad. My PC will not be able to run new games :(', 4, 1, NOW());
 
 INSERT INTO comment (content, post_id, user_id, created_at, parent_comment_id)
 VALUES
@@ -124,6 +124,10 @@ WHERE username = 'vladsto';
 
 DELETE p FROM post AS p
 INNER JOIN user AS u ON u.id = p.user_id
+WHERE u.username = 'vladsto';
+
+SELECT * FROM comment AS c
+INNER JOIN user AS u ON c.user_id = u.id
 WHERE u.username = 'vladsto';
 
 SELECT
