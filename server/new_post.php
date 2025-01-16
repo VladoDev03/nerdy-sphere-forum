@@ -4,6 +4,40 @@ session_start();
 if(!isset($_SESSION['user'])) {
     header('Location: login.php');
 }
+
+require_once "database.php";
+
+$errors = [];
+
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    $title = $_POST["title"];
+    $content = $_POST["content"];
+    $category = $_POST["category"];
+    $userId = $_SESSION["user_id"];
+
+    if (empty($title) || empty($content)) {
+        $errors[] = "All fields are required.";
+    }
+
+    if (count($errors) === 0) {
+        $conn = getDatabaseConnection();
+
+        $stmt = $conn->prepare("INSERT INTO post (title, content, category, user_id) VALUES (?, ?, ?, ?);");
+        $stmt->bind_param("sssi", $title, $content, $category, $userId);
+        $stmt->execute();
+        $stmt->store_result();
+
+        if ($stmt->execute()) {
+            header("Location: index.php");
+            exit();
+        } else {
+            $errors[] = "Something went wrong. Please try again later.";
+        }
+
+        $stmt->close();
+        $conn->close();
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">

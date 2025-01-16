@@ -193,33 +193,35 @@ $conn->close();
             <?php endif; ?>
         </div>
 
-        <div class="comment-section">
-            <?php foreach ($post['comments'] as $comment): ?>
-                <div class="comment">
-                    <p class="comment-user"><?= $comment['username'] ?>:</p>
-                    <p class="comment-content"><?= $comment['content'] ?></p>
-                    <p class="comment-info">Posted at: <?= $comment['created_at'] ?></p>
-                    <textarea class="reply-input" placeholder="Add a reply..."></textarea>
-                    <button class="submit-reply">Send Reply</button>
-
-                    <div class="comment-replies">
-                        <?php foreach ($comment['replies'] as $reply): ?>
-                            <div class="comment-reply">
-                                <p class="comment-user"><?= $reply['username'] ?>:</p>
-                                <p class="comment-content"><?= $reply['content'] ?></p>
-                                <p class="comment-info">Posted at: <?= $reply['created_at'] ?></p>
-                            </div>
-                        <?php endforeach; ?>
-                    </div>
-                </div>
-
-            <?php endforeach; ?>
-        </div>
-
-        <form action="#">
+        <form class="comment-form" action="#">
             <textarea class="comment-input" placeholder="Add a comment..."></textarea>
             <button class="submit-comment">Send Comment</button>
         </form>
+
+        <?php if (count($post['comments']) > 0): ?>
+            <div class="comment-section">
+                <?php foreach ($post['comments'] as $comment): ?>
+                    <div class="comment">
+                        <p class="comment-user"><?= $comment['username'] ?>:</p>
+                        <p class="comment-content"><?= $comment['content'] ?></p>
+                        <p class="comment-info">Posted at: <?= $comment['created_at'] ?></p>
+                        <textarea class="reply-input" placeholder="Add a reply..."></textarea>
+                        <button class="submit-reply">Send Reply</button>
+
+                        <div class="comment-replies">
+                            <?php foreach ($comment['replies'] as $reply): ?>
+                                <div class="comment-reply">
+                                    <p class="comment-user"><?= $reply['username'] ?>:</p>
+                                    <p class="comment-content"><?= $reply['content'] ?></p>
+                                    <p class="comment-info">Posted at: <?= $reply['created_at'] ?></p>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+
+                <?php endforeach; ?>
+            </div>
+        <?php endif; ?>
     </div>
 <?php endforeach; ?>
 

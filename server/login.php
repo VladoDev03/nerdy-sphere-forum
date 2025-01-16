@@ -8,7 +8,7 @@ if (isset($_SESSION["user"])) {
 
 require_once "database.php";
 
-$errors = array();
+$errors = [];
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $usernameOrEmail = $_POST["username_or_email"];

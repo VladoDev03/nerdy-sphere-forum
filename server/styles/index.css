@@ -42,10 +42,14 @@ body {
     background-color: #fff;
 }
 
-.post-body,
+.comment-form {
+    margin-top: 15px;
+}
+
 .comment-section {
-    margin-bottom: 25px;
+    margin-top: 15px;
     border-bottom: 2px solid #333;
+    border-top: 2px solid #333;
 }
 
 .content,
@@ -84,6 +88,7 @@ body {
 
 .comment-user,
 .reply-user {
+    margin-top: 10px;
     font-weight: bold;
 }
 
