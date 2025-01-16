@@ -161,15 +161,16 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $data = json_decode($input, true);
 
     $content = $data['content'];
-    $postId = $data['postId'];
     $userId = $data['userId'];
+    $postId = $data['postId'];
+    $parentId = $data['parentId'] ?? null;
 
     if ($userId !== $_SESSION['user_id']) {
         exit();
     }
 
-    $stmt = $conn->prepare("INSERT INTO comment (content, post_id, user_id) VALUES (?, ?, ?);");
-    $stmt->bind_param("sii", $content, $postId, $userId);
+    $stmt = $conn->prepare("INSERT INTO comment (content, post_id, user_id, parent_comment_id) VALUES (?, ?, ?, ?);");
+    $stmt->bind_param("siii", $content, $postId, $userId, $parentId);
 
     if ($stmt->execute()) {
         exit();
@@ -235,8 +236,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                         <p class="comment-user"><?= $comment['username'] ?>:</p>
                         <p class="comment-content"><?= $comment['content'] ?></p>
                         <p class="comment-info">Posted at: <?= $comment['created_at'] ?></p>
-                        <textarea class="reply-input" placeholder="Add a reply..."></textarea>
-                        <button class="submit-reply">Send Reply</button>
+
+                        <form class="reply-form" action="index.php" method="POST">
+                            <textarea class="reply-input" name="reply-input" id="reply-input-<?= $comment['id'] ?>"
+                                      placeholder="Add a reply..."></textarea>
+                            <input type="hidden" id="post-id-<?= $comment['id'] ?>" value="<?= $post['id'] ?>">
+                            <button id="submit-reply-<?= $comment['id'] ?>" class="submit-reply">Send Reply</button>
+                        </form>
 
                         <div class="comment-replies">
                             <?php foreach ($comment['replies'] as $reply): ?>
