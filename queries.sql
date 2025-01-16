@@ -62,7 +62,6 @@ CREATE TABLE post_image (
     id INT AUTO_INCREMENT PRIMARY KEY,
     post_id INT NOT NULL,
     image_url VARCHAR(255) NOT NULL,
-    public_id VARCHAR(255) NOT NULL,
     FOREIGN KEY (post_id) REFERENCES post(id) ON DELETE CASCADE
 );
 
@@ -78,12 +77,12 @@ VALUES
     ('The Future of Manga: Trends and Predictions', 'Nullam vehicula, justo vel cursus convallis, leo nisl fermentum dui, in tincidunt ligula neque eget turpis.', 'Manga', 3, NOW()),
     ('The Evolution of Anime: A Visual Journey', 'Curabitur ultricies dolor ac velit malesuada, nec fermentum erat mollis. Phasellus sit amet augue vitae est eleifend pretium.', 'Anime', 2, NOW());
 
-INSERT INTO post_image (post_id, image_url, public_id)
+INSERT INTO post_image (post_id, image_url)
 VALUES
-    (2, 'https://res.cloudinary.com/dtqmlqc0d/image/upload/v1736643122/forum/cnqwbt1ckjclw9grgkle.jpg', 'image_1_public_id'),
-    (3, 'https://res.cloudinary.com/dtqmlqc0d/image/upload/v1736643122/forum/cnqwbt1ckjclw9grgkle.jpg', 'image_2_public_id'),
-    (3, 'https://res.cloudinary.com/dtqmlqc0d/image/upload/v1736643122/forum/cnqwbt1ckjclw9grgkle.jpg', 'image_3_public_id'),
-    (3, 'https://res.cloudinary.com/dtqmlqc0d/image/upload/v1736643122/forum/cnqwbt1ckjclw9grgkle.jpg', 'image_4_public_id');
+    (2, 'https://res.cloudinary.com/dtqmlqc0d/image/upload/v1736643122/forum/cnqwbt1ckjclw9grgkle.jpg'),
+    (3, 'https://res.cloudinary.com/dtqmlqc0d/image/upload/v1736643122/forum/cnqwbt1ckjclw9grgkle.jpg'),
+    (3, 'https://res.cloudinary.com/dtqmlqc0d/image/upload/v1736643122/forum/cnqwbt1ckjclw9grgkle.jpg'),
+    (3, 'https://res.cloudinary.com/dtqmlqc0d/image/upload/v1736643122/forum/cnqwbt1ckjclw9grgkle.jpg');
 
 INSERT INTO comment (content, post_id, user_id, created_at)
 VALUES
@@ -94,6 +93,7 @@ VALUES
 INSERT INTO comment (content, post_id, user_id, created_at, parent_comment_id)
 VALUES
     ('Thanks! I\'m glad you liked the insights.', 1, 1, NOW(), 1),
+    ('Thanks! I\'m glad you liked it.', 1, 1, NOW(), 1),
     ('Yes, it\'ll be interesting to see how the market reacts!', 2, 2, NOW(), 2),
     ('I appreciate your thoughts, it\'s a fascinating topic.', 3, 2, NOW(), 3);
 
@@ -110,6 +110,7 @@ SELECT * FROM comment_tag;
 SELECT * FROM post_image;
 
 SET SQL_SAFE_UPDATES = 0;
+DELETE FROM user;
 DELETE FROM post;
 DELETE FROM comment;
 DELETE FROM comment_tag;
@@ -118,3 +119,62 @@ SET SQL_SAFE_UPDATES = 1;
 
 DELETE FROM user
 WHERE username = 'vladsto';
+
+SELECT
+	p.title AS 'Post Title',
+    p.content AS 'Post Content',
+    p.created_at AS 'Created At',
+	p.category AS 'Post Category',
+	u.username AS 'Post user',
+    c.content AS 'Comment',
+    c.created_at AS 'Comment Created At',
+    uc.username AS 'Comment User',
+    pi.image_url AS 'Post Image Url',
+    r.content AS 'Reply Content',
+    r.created_at AS 'Reply Created At',
+    ur.username AS 'Reply User'
+FROM post AS p
+INNER JOIN user AS u ON u.id = p.user_id
+INNER JOIN comment AS c ON c.post_id = p.id
+INNER JOIN user AS uc ON uc.id = c.user_id
+INNER JOIN post_image AS pi ON pi.post_id = p.id
+INNER JOIN comment AS r ON c.id = r.parent_comment_id
+INNER JOIN user AS ur ON ur.id = r.user_id;
+
+# Get posts and their user
+SELECT
+	p.id,
+	p.title,
+    p.content,
+    p.created_at,
+    u.id AS 'user id',
+	u.username
+FROM post AS p
+INNER JOIN user AS u ON u.id = p.user_id;
+
+# Get post images
+SELECT
+    id,
+    image_url
+FROM post_image
+WHERE post_id = 3;
+
+# Get post comments
+SELECT
+    id,
+    content,
+    created_at
+FROM comment
+WHERE post_id = 3
+AND parent_comment_id IS NULL;
+
+# Get comment replies and their user
+SELECT
+	c.id AS 'reply id',
+	c.content,
+    c.created_at,
+    u.id AS 'user id',
+    u.username
+FROM comment AS c
+INNER JOIN user AS u ON u.id = c.user_id
+WHERE c.parent_comment_id = '1';
