@@ -147,6 +147,7 @@ SELECT
 	p.title,
     p.content,
     p.created_at,
+    p.category,
     u.id AS 'user id',
 	u.username
 FROM post AS p
@@ -159,12 +160,15 @@ SELECT
 FROM post_image
 WHERE post_id = 3;
 
-# Get post comments
+# Get post comments and their user
 SELECT
-    id,
-    content,
-    created_at
-FROM comment
+    c.id,
+    c.content,
+    c.created_at,
+    u.id AS 'user id',
+    u.username
+FROM comment AS c
+INNER JOIN user AS u ON u.id = c.user_id
 WHERE post_id = 3
 AND parent_comment_id IS NULL;
 

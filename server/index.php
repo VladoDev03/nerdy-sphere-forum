@@ -4,101 +4,163 @@ session_start();
 if (!isset($_SESSION['user'])) {
     header('Location: login.php');
 }
+
+require_once "database.php";
+
+$postSql = "
+    SELECT
+        p.id,
+        p.title,
+        p.content,
+        p.category,
+        p.created_at,
+        u.id AS user_id,
+        u.username
+    FROM post AS p
+    INNER JOIN user AS u ON u.id = p.user_id;
+";
+
+$postStmt = $conn->prepare($postSql);
+$postStmt->execute();
+$postStmt->bind_result($postId, $title, $content, $category, $createdAt, $userId, $username);
+
+$postData = [];
+
+while ($postStmt->fetch()) {
+    $postData[] = [
+        'id' => $postId,
+        'title' => $title,
+        'content' => $content,
+        'category' => $category,
+        'created_at' => $createdAt,
+        'user_id' => $userId,
+        'username' => $username,
+    ];
+}
+
+$postStmt->close();
+
+$posts = [];
+
+foreach ($postData as $post) {
+    $postId = $post['id'];
+
+    $imageSql = "
+        SELECT
+            id,
+            image_url
+        FROM post_image
+        WHERE post_id = ?;
+    ";
+
+    $imageStmt = $conn->prepare($imageSql);
+    $imageStmt->bind_param("i", $postId);
+    $imageStmt->execute();
+    $imageStmt->bind_result($imageId, $imageUrl);
+
+    $images = [];
+
+    while ($imageStmt->fetch()) {
+        $images[] = ['id' => $imageId, 'url' => $imageUrl];
+    }
+
+    $imageStmt->close();
+
+    $commentSql = "
+        SELECT
+            c.id,
+            c.content,
+            c.created_at,
+            u.id AS 'user id',
+            u.username
+        FROM comment AS c
+        INNER JOIN user AS u ON u.id = c.user_id
+        WHERE post_id = ?
+        AND parent_comment_id IS NULL;
+    ";
+
+    $commentStmt = $conn->prepare($commentSql);
+    $commentStmt->bind_param("i", $postId);
+    $commentStmt->execute();
+    $commentStmt->bind_result($commentId, $commentContent, $commentCreatedAt, $commentUserId, $commentUsername);
+
+    $comments = [];
+
+    while ($commentStmt->fetch()) {
+        $replies = [];
+
+        $comments[] = [
+            'id' => $commentId,
+            'content' => $commentContent,
+            'created_at' => $commentCreatedAt,
+            'replies' => $replies,
+            'userId' => $commentUserId,
+            'username' => $commentUsername
+        ];
+    }
+
+    $commentStmt->close();
+
+    $posts[] = array_merge($post, [
+        'images' => $images,
+        'comments' => $comments
+    ]);
+}
+
+foreach ($posts as $postIndex => $post) {
+    foreach ($post['comments'] as $commentIndex => $comment) {
+        $commentId = $comment['id'];
+        $commentContent = $comment['content'];
+        $commentCreatedAt = $comment['created_at'];
+
+        $replySql = "
+            SELECT
+            	c.id AS 'reply id',
+            	c.content,
+                c.created_at,
+                u.id AS 'user id',
+                u.username
+            FROM comment AS c
+            INNER JOIN user AS u ON u.id = c.user_id
+            WHERE c.parent_comment_id = ?;
+        ";
+
+        $replyStmt = $conn->prepare($replySql);
+        $replyStmt->bind_param("i", $commentId);
+        $replyStmt->execute();
+        $replyStmt->bind_result($replyId, $replyContent, $replyCreatedAt, $replyUserId, $replyUsername);
+
+        $replies = [];
+
+        while ($replyStmt->fetch()) {
+            $replies[] = [
+                'id' => $replyId,
+                'content' => $replyContent,
+                'created_at' => $replyCreatedAt,
+                'userId' => $replyUserId,
+                'username' => $replyUsername
+            ];
+        }
+
+        $replyStmt->close();
+
+        $post['comments'][$commentIndex]['replies'] = $replies;
+    }
+
+    $posts[$postIndex] = $post;
+}
+
+$conn->close();
+
+//echo json_encode($posts, JSON_PRETTY_PRINT);
 ?>
 
-<?php
-$posts = [
-    [
-        'title' => 'Exploring the Latest in Video Games',
-        'author' => 'user1',
-        'category' => 'Video Games',
-        'posted_at' => '2025-01-12 12:00',
-        'content' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce convallis justo eget orci efficitur, eget fermentum justo tristique. Sed ut placerat nunc. Quisque vel mauris felis.',
-        'comments' => [
-            [
-                'author' => 'user2',
-                'content' => 'Great insights! I agree with your perspective on the latest releases.',
-                'posted_at' => '2025-01-12 14:00',
-                'reply' => [
-                    'author' => 'user1',
-                    'content' => 'Thanks! I\'m glad you liked the insights.',
-                    'posted_at' => '2025-01-12 14:30'
-                ]
-            ]
-        ]
-    ],
-    [
-        'title' => 'The Future of Manga: Trends and Predictions',
-        'author' => 'user3',
-        'category' => 'Manga',
-        'posted_at' => '2025-01-11 18:00',
-        'content' => 'Nullam vehicula, justo vel cursus convallis, leo nisl fermentum dui, in tincidunt ligula neque eget turpis.',
-        'images' => [
-            'https://res.cloudinary.com/dtqmlqc0d/image/upload/v1736643122/forum/cnqwbt1ckjclw9grgkle.jpg'
-        ],
-        'comments' => [
-            [
-                'author' => 'user1',
-                'content' => 'I can\'t wait to see how these trends shape the industry!',
-                'posted_at' => '2025-01-11 20:00',
-                'reply' => [
-                    'author' => 'user2',
-                    'content' => 'Yes, it\'ll be interesting to see how the market reacts!',
-                    'posted_at' => '2025-01-11 20:30'
-                ]
-            ]
-        ]
-    ],
-    [
-        'title' => 'The Evolution of Anime: A Visual Journey',
-        'author' => 'user2',
-        'category' => 'Anime',
-        'posted_at' => '2025-01-10 10:00',
-        'content' => 'Curabitur ultricies dolor ac velit malesuada, nec fermentum erat mollis. Phasellus sit amet augue vitae est eleifend pretium.',
-        'images' => [
-            'https://res.cloudinary.com/dtqmlqc0d/image/upload/v1736643122/forum/cnqwbt1ckjclw9grgkle.jpg',
-            'https://res.cloudinary.com/dtqmlqc0d/image/upload/v1736643122/forum/cnqwbt1ckjclw9grgkle.jpg',
-            'https://res.cloudinary.com/dtqmlqc0d/image/upload/v1736643122/forum/cnqwbt1ckjclw9grgkle.jpg',
-            'https://res.cloudinary.com/dtqmlqc0d/image/upload/v1736643122/forum/cnqwbt1ckjclw9grgkle.jpg'
-        ],
-        'comments' => [
-            [
-                'author' => 'user3',
-                'content' => 'This is such an amazing breakdown of the anime industry!',
-                'posted_at' => '2025-01-10 12:00',
-                'reply' => [
-                    'author' => 'user2',
-                    'content' => 'I appreciate your thoughts, it\'s a fascinating topic.',
-                    'posted_at' => '2025-01-10 12:30'
-                ]
-            ],
-            [
-                'author' => 'user3',
-                'content' => 'This is such an amazing breakdown of the anime industry!',
-                'posted_at' => '2025-01-10 12:00',
-                'reply' => [
-                    [
-                        'author' => 'user2',
-                        'content' => 'I appreciate your thoughts, it\'s a fascinating topic.',
-                        'posted_at' => '2025-01-10 12:30'
-                    ],
-                    [
-                        'author' => 'user2',
-                        'content' => 'I appreciate your thoughts, it\'s a fascinating topic.',
-                        'posted_at' => '2025-01-10 12:30'
-                    ]
-                ]
-            ]
-        ]
-    ]
-];
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nerdy Sphere Forum</title>
+    <title>NerdySphere_Forum</title>
     <link rel="stylesheet" href="styles/index.css">
 </head>
 <body>
@@ -117,14 +179,15 @@ $posts = [
 <?php foreach ($posts as $post): ?>
     <div class="post">
         <div class="post-body">
-            <p class="post-info">Posted by: <?= $post['author'] ?> | Category: <?= $post['category'] ?> | Posted at: <?= $post['posted_at'] ?></p>
+            <p class="post-info">Posted by: <?= $post['username'] ?> | Category: <?= $post['category'] ?> | Posted
+                at: <?= $post['created_at'] ?></p>
             <h2 class="title"><?= $post['title'] ?></h2>
             <p class="content"><?= $post['content'] ?></p>
 
             <?php if (isset($post['images'])): ?>
                 <div class="post-images">
                     <?php foreach ($post['images'] as $image): ?>
-                        <img class="image" src="<?= $image ?>" alt="Post Image">
+                        <img class="image" src="<?= $image['url'] ?>" alt="Post Image">
                     <?php endforeach; ?>
                 </div>
             <?php endif; ?>
@@ -133,23 +196,20 @@ $posts = [
         <div class="comment-section">
             <?php foreach ($post['comments'] as $comment): ?>
                 <div class="comment">
-                    <p class="comment-user">user3:</p>
-                    <p class="comment-content">This is such an amazing breakdown of the anime industry!</p>
-                    <p class="comment-info">Posted at: 2025-01-10 12:00</p>
+                    <p class="comment-user"><?= $comment['username'] ?>:</p>
+                    <p class="comment-content"><?= $comment['content'] ?></p>
+                    <p class="comment-info">Posted at: <?= $comment['created_at'] ?></p>
                     <textarea class="reply-input" placeholder="Add a reply..."></textarea>
                     <button class="submit-reply">Send Reply</button>
 
                     <div class="comment-replies">
-                        <div class="comment-reply">
-                            <p class="comment-user">user2:</p>
-                            <p class="comment-content">I appreciate your thoughts, it's a fascinating topic.</p>
-                            <p class="comment-info">Posted at: 2025-01-10 12:30</p>
-                        </div>
-                        <div class="comment-reply">
-                            <p class="comment-user">user2:</p>
-                            <p class="comment-content">Another follow-up reply!</p>
-                            <p class="comment-info">Posted at: 2025-01-10 13:00</p>
-                        </div>
+                        <?php foreach ($comment['replies'] as $reply): ?>
+                            <div class="comment-reply">
+                                <p class="comment-user"><?= $reply['username'] ?>:</p>
+                                <p class="comment-content"><?= $reply['content'] ?></p>
+                                <p class="comment-info">Posted at: <?= $reply['created_at'] ?></p>
+                            </div>
+                        <?php endforeach; ?>
                     </div>
                 </div>
 
