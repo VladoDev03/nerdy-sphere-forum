@@ -15,14 +15,19 @@ $postSql = "
         p.category,
         p.created_at,
         u.id AS user_id,
-        u.username
+        u.username,
+        COUNT(DISTINCT c.id) AS comments_count,
+        COUNT(DISTINCT r.id) AS replies_count
     FROM post AS p
-    INNER JOIN user AS u ON u.id = p.user_id;
+    INNER JOIN user AS u ON u.id = p.user_id
+    LEFT JOIN comment AS c ON c.post_id = p.id AND c.parent_comment_id IS NULL
+    LEFT JOIN comment AS r ON r.post_id = p.id AND r.parent_comment_id IS NOT NULL
+    GROUP BY p.id;
 ";
 
 $postStmt = $conn->prepare($postSql);
 $postStmt->execute();
-$postStmt->bind_result($postId, $title, $content, $category, $createdAt, $userId, $username);
+$postStmt->bind_result($postId, $title, $content, $category, $createdAt, $userId, $username, $commentsCount, $repliesCount);
 
 $postData = [];
 
@@ -35,6 +40,8 @@ while ($postStmt->fetch()) {
         'created_at' => $createdAt,
         'user_id' => $userId,
         'username' => $username,
+        'comments_count' => $commentsCount,
+        'replies_count' => $repliesCount
     ];
 }
 
@@ -220,7 +227,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         <!--        --><?php //if (count($post['comments']) > 0): ?>
         <details id="comment-section-<?= $post['id'] ?>" class="comment-section">
-            <summary>View Comments</summary>
+            <summary>View Comments (<?= $post['comments_count'] ?>)</summary>
             <?php foreach ($post['comments'] as $comment): ?>
                 <div class="comment">
                     <p class="comment-user"><?= $comment['username'] ?>:</p>
@@ -236,7 +243,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
                     <!--                        --><?php //if (count($comment['replies']) > 0): ?>
                     <details id="reply-section-<?= $comment['id'] ?>">
-                        <summary>View Replies</summary>
+                        <summary>View Replies (<?= $post['replies_count'] ?>)</summary>
                         <?php foreach ($comment['replies'] as $reply): ?>
                             <div class="comment-reply">
                                 <p class="comment-user"><?= $reply['username'] ?>:</p>

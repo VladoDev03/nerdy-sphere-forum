@@ -163,6 +163,23 @@ SELECT
 FROM post AS p
 INNER JOIN user AS u ON u.id = p.user_id;
 
+# Get posts and their user and comments count and replies count
+SELECT
+    p.id,
+    p.title,
+    p.content,
+    p.category,
+    p.created_at,
+    u.id AS user_id,
+    u.username,
+    COUNT(DISTINCT c.id) AS comments_count,
+    COUNT(DISTINCT r.id) AS replies_count
+FROM post AS p
+INNER JOIN user AS u ON u.id = p.user_id
+LEFT JOIN comment AS c ON c.post_id = p.id AND c.parent_comment_id IS NULL
+LEFT JOIN comment AS r ON r.post_id = p.id AND r.parent_comment_id IS NOT NULL
+GROUP BY p.id;
+
 # Get post images
 SELECT
     id,
