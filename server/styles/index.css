@@ -93,7 +93,7 @@ body {
 .submit-reply {
     padding: 10px 15px;
     font-size: 16px;
-    background-color: cornflowerblue;
+    background-color: dodgerblue;
     border: none;
     border-radius: 4px;
     cursor: pointer;
@@ -102,7 +102,7 @@ body {
 
 .submit-comment:hover,
 .submit-reply:hover {
-    background-color: dodgerblue;
+    background-color: cornflowerblue;
 }
 
 .reply-input,
