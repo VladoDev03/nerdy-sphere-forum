@@ -75,6 +75,7 @@ foreach ($posts as $postIndex => $post) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NerdySphere_Forum</title>
     <link rel="stylesheet" href="styles/index.css">
+    <script src="js/formatters.js" defer></script>
     <script src="js/index.js" defer></script>
 </head>
 <body>
@@ -84,9 +85,7 @@ foreach ($posts as $postIndex => $post) {
 <?php foreach ($posts as $post): ?>
     <?php include 'includes/post_view.php'; ?>
 <?php endforeach; ?>
-<script>
-    const currentUsername = '<?= $_SESSION['user'] ?>';
-    const currentUserId = <?= $_SESSION['user_id'] ?>;
-</script>
+
+<?php include 'includes/footer.php'; ?>
 </body>
 </html>

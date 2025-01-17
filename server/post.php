@@ -62,14 +62,12 @@ $conn->close();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= htmlspecialchars($post['title']) ?></title>
     <link rel="stylesheet" href="styles/index.css">
+    <script src="js/formatters.js" defer></script>
     <script src="js/index.js" defer></script>
 </head>
 <body>
 <?php include 'includes/navbar.php'; ?>
 <?php include 'includes/post_view.php'; ?>
-<script>
-    const currentUsername = '<?= $_SESSION['user'] ?>';
-    const currentUserId = <?= $_SESSION['user_id'] ?>;
-</script>
+<?php include 'includes/footer.php'; ?>
 </body>
 </html>
