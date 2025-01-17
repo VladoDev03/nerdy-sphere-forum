@@ -17,8 +17,10 @@ $postSql = "
         p.content,
         p.category,
         p.created_at,
+        u.username,
         count(c.id) AS comments_count
     FROM post AS p
+    LEFT JOIN user AS u ON u.id = p.user_id
     LEFT JOIN comment AS c ON c.post_id = p.id
     WHERE p.id = ?
     GROUP BY p.id;
@@ -27,7 +29,7 @@ $postSql = "
 $stmt = $conn->prepare($postSql);
 $stmt->bind_param("i", $postId);
 $stmt->execute();
-$stmt->bind_result($title, $content, $category, $createdAt, $commentsCount);
+$stmt->bind_result($title, $content, $category, $createdAt, $username, $commentsCount);
 
 if (!$stmt->fetch()) {
     header('Location: index.php');
@@ -42,6 +44,7 @@ $post = [
     "content" => $content,
     "category" => $category,
     "created_at" => $createdAt,
+    "username" => $username,
     "comments_count" => $commentsCount
 ];
 
