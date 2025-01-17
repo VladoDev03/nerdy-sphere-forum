@@ -5,7 +5,7 @@ if (!isset($_SESSION['user'])) {
     header('Location: login.php');
 }
 
-require_once "database.php";
+require_once "configuration/database.php";
 
 $postSql = "
     SELECT

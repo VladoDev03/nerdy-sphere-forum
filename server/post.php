@@ -6,7 +6,7 @@ if (!isset($_GET['id'])) {
     exit();
 }
 
-require_once "database.php";
+require_once "configuration/database.php";
 
 $postId = intval($_GET['id']);
 

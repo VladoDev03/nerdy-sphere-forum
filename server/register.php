@@ -6,7 +6,7 @@ if (isset($_SESSION["user"])) {
     exit();
 }
 
-require_once "database.php";
+require_once "configuration/database.php";
 
 $errors = [];
 
