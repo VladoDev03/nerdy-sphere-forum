@@ -178,20 +178,6 @@ INNER JOIN user AS u ON u.id = p.user_id
 INNER JOIN comment AS c ON c.post_id = p.id
 GROUP BY p.id;
 
-SELECT
-        p.id,
-        p.title,
-        p.content,
-        p.category,
-        p.created_at,
-        u.id AS user_id,
-        u.username,
-        count(c.id) AS comments_count
-    FROM post AS p
-    INNER JOIN user AS u ON u.id = p.user_id
-    INNER JOIN comment AS c ON c.post_id = p.id
-    GROUP BY p.id;
-
 # Get post images
 SELECT
     id,
@@ -250,3 +236,14 @@ SELECT
     p.created_at
 FROM post AS p
 WHERE p.id = 4;
+
+DELETE FROM post
+WHERE id = 23;
+
+SELECT * FROM post AS p
+INNER JOIN comment AS c ON p.id = c.post_id
+WHERE p.id = 23;
+
+SELECT * FROM comment AS c
+INNER JOIN post AS p ON p.id = c.post_id
+WHERE c.post_id = 6;

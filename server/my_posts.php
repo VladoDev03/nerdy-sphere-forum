@@ -48,6 +48,7 @@ $conn->close();
     <title>My Posts</title>
     <link rel="stylesheet" href="styles/my_posts.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="js/delete-post.js" defer></script>
 </head>
 <body>
 
@@ -61,8 +62,8 @@ $conn->close();
         <a href="post.php?id=<?= $post['id'] ?>" class="post-link">
         <div class="post">
             <div class="post-icons">
-                <i class="fas fa-edit edit-icon edit"></i>
-                <i class="fas fa-trash-alt delete-icon delete"></i>
+                <i class="fas fa-edit edit-icon edit" data-id="<?= $post['id'] ?>"></i>
+                <i class="fas fa-trash-alt delete-icon delete" data-id="<?= $post['id'] ?>"></i>
             </div>
             <h2 class="post-title"><?= $post['title'] ?></h2>
             <div class="info-container">
