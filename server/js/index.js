@@ -50,7 +50,7 @@ Object.values(buttons).forEach(button => button.addEventListener('click', (e) =>
         content: input
     }
 
-    fetch('index.php', {
+    fetch('../utils/db_add_comment.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(comment)

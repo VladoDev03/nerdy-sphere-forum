@@ -14,7 +14,7 @@
         <?php endif; ?>
     </div>
 
-    <form class="comment-form" action="index.php" method="POST">
+    <form class="comment-form" action="../utils/db_add_comment.php" method="POST">
             <textarea class="comment-input" name="comment-input" id="comment-input-<?= $post['id'] ?>"
                       placeholder="Add a comment..."></textarea>
         <button id="submit-comment-<?= $post['id'] ?>" class="submit-comment">Send Comment</button>
@@ -29,7 +29,7 @@
                 <p class="comment-content"><?= $comment['content'] ?></p>
                 <p class="comment-info">Posted at: <?= $comment['created_at'] ?></p>
 
-                <form class="reply-form" action="index.php" method="POST">
+                <form class="reply-form" action="../utils/db_add_comment.php" method="POST">
                             <textarea class="reply-input" name="reply-input" id="reply-input-<?= $comment['id'] ?>"
                                       placeholder="Add a reply..."></textarea>
                     <input type="hidden" id="post-id-<?= $comment['id'] ?>" value="<?= $post['id'] ?>">
