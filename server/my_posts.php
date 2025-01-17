@@ -58,6 +58,7 @@ $conn->close();
 </header>
 <?php foreach ($posts as $post): ?>
     <main class="container">
+        <a href="post.php?id=<?= $post['id'] ?>" class="post-link">
         <div class="post">
             <div class="post-icons">
                 <i class="fas fa-edit edit-icon edit"></i>
@@ -69,6 +70,7 @@ $conn->close();
                 <p class="comments-count"><?= $post['$comments_count'] ?> comments</p>
             </div>
         </div>
+        </a>
     </main>
 <?php endforeach; ?>
 </body>

@@ -203,3 +203,21 @@ FROM post AS p
 INNER JOIN comment AS c ON c.post_id = p.id
 WHERE p.user_id = '4'
 GROUP BY p.id;
+
+# Get all posts and their comments count
+SELECT
+	p.id,
+    p.title,
+    p.created_at,
+    count(*) AS comments_count
+FROM post AS p
+INNER JOIN comment AS c ON c.post_id = p.id
+GROUP BY p.id;
+
+# Get post by id
+SELECT
+	p.title,
+    p.content,
+    p.created_at
+FROM post AS p
+WHERE p.id = 4;
