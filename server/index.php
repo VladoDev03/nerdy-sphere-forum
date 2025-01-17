@@ -6,6 +6,7 @@ if (!isset($_SESSION['user'])) {
 }
 
 require_once "configuration/database.php";
+require_once "utils/db_post_data.php";
 
 $postSql = "
     SELECT
@@ -51,61 +52,8 @@ $posts = [];
 foreach ($postData as $post) {
     $postId = $post['id'];
 
-    $imageSql = "
-        SELECT
-            id,
-            image_url
-        FROM post_image
-        WHERE post_id = ?;
-    ";
-
-    $imageStmt = $conn->prepare($imageSql);
-    $imageStmt->bind_param("i", $postId);
-    $imageStmt->execute();
-    $imageStmt->bind_result($imageId, $imageUrl);
-
-    $images = [];
-
-    while ($imageStmt->fetch()) {
-        $images[] = ['id' => $imageId, 'url' => $imageUrl];
-    }
-
-    $imageStmt->close();
-
-    $commentSql = "
-        SELECT
-            c.id,
-            c.content,
-            c.created_at,
-            u.id AS 'user id',
-            u.username
-        FROM comment AS c
-        INNER JOIN user AS u ON u.id = c.user_id
-        WHERE post_id = ?
-        AND parent_comment_id IS NULL;
-    ";
-
-    $commentStmt = $conn->prepare($commentSql);
-    $commentStmt->bind_param("i", $postId);
-    $commentStmt->execute();
-    $commentStmt->bind_result($commentId, $commentContent, $commentCreatedAt, $commentUserId, $commentUsername);
-
-    $comments = [];
-
-    while ($commentStmt->fetch()) {
-        $replies = [];
-
-        $comments[] = [
-            'id' => $commentId,
-            'content' => $commentContent,
-            'created_at' => $commentCreatedAt,
-            'replies' => $replies,
-            'userId' => $commentUserId,
-            'username' => $commentUsername
-        ];
-    }
-
-    $commentStmt->close();
+    $images = fetchImages($conn, $postId);
+    $comments = fetchComments($conn, $postId);
 
     $posts[] = array_merge($post, [
         'images' => $images,
@@ -114,46 +62,7 @@ foreach ($postData as $post) {
 }
 
 foreach ($posts as $postIndex => $post) {
-    foreach ($post['comments'] as $commentIndex => $comment) {
-        $commentId = $comment['id'];
-        $commentContent = $comment['content'];
-        $commentCreatedAt = $comment['created_at'];
-
-        $replySql = "
-            SELECT
-            	c.id AS 'reply id',
-            	c.content,
-                c.created_at,
-                u.id AS 'user id',
-                u.username
-            FROM comment AS c
-            INNER JOIN user AS u ON u.id = c.user_id
-            WHERE c.parent_comment_id = ?;
-        ";
-
-        $replyStmt = $conn->prepare($replySql);
-        $replyStmt->bind_param("i", $commentId);
-        $replyStmt->execute();
-        $replyStmt->bind_result($replyId, $replyContent, $replyCreatedAt, $replyUserId, $replyUsername);
-
-        $replies = [];
-
-        while ($replyStmt->fetch()) {
-            $replies[] = [
-                'id' => $replyId,
-                'content' => $replyContent,
-                'created_at' => $replyCreatedAt,
-                'userId' => $replyUserId,
-                'username' => $replyUsername
-            ];
-        }
-
-        $replyStmt->close();
-
-        $post['comments'][$commentIndex]['replies'] = $replies;
-    }
-
-    $posts[$postIndex] = $post;
+    $posts[$postIndex] = fetchReplies($post, $conn);
 }
 
 //echo json_encode($posts, JSON_PRETTY_PRINT);
