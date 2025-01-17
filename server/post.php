@@ -1,6 +1,10 @@
 <?php
 session_start();
 
+if (!isset($_SESSION['user'])) {
+    header('Location: login.php');
+}
+
 if (!isset($_GET['id'])) {
     header('Location: index.php');
     exit();
