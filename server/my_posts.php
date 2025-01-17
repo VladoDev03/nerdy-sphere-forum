@@ -49,6 +49,9 @@ $conn->close();
     <link rel="stylesheet" href="styles/my_posts.css">
 </head>
 <body>
+
+<?php include 'includes/navbar.php'; ?>
+
 <header>
     <h1 class="page-title">My Posts</h1>
 </header>

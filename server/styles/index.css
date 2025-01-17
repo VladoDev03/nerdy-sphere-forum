@@ -12,28 +12,6 @@ body {
     flex-direction: column;
 }
 
-.navbar {
-    background-color: cornflowerblue;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.nav-url,
-.nav-title {
-    float: right;
-    display: block;
-    color: #333;
-    text-align: center;
-    padding: 14px 20px;
-    text-decoration: none;
-    font-weight: bolder;
-}
-
-.navbar a:hover {
-    color: #222;
-}
-
 .post {
     border-radius: 10px;
     padding: 20px;

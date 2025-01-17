@@ -154,8 +154,6 @@ foreach ($posts as $postIndex => $post) {
 ?>
 
 <?php
-require_once "database.php";
-
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $input = file_get_contents('php://input');
     $data = json_decode($input, true);
@@ -194,16 +192,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 </head>
 <body>
 
-<div class="navbar">
-    <div class="left-navigation">
-        <a class="nav-url" href="logout.php">Logout</a>
-    </div>
-    <h1 class="nav-title">NerdySphere_Forum</h1>
-    <div class="right-navigation">
-        <a class="nav-url" href="profile.php">Profile</a>
-        <a class="nav-url" href="new_post.php">Create Post</a>
-    </div>
-</div>
+<?php include 'includes/navbar.php'; ?>
 
 <?php foreach ($posts as $post): ?>
     <div class="post">
