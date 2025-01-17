@@ -135,3 +135,22 @@ body {
 .reply-input {
     margin-top: 10px;
 }
+
+.comment-section, .reply-section {
+    margin-top: 10px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    background-color: #f7f7f7;
+}
+
+.comment-section summary, .reply-section summary {
+    cursor: pointer;
+    font-weight: bold;
+    margin-bottom: 5px;
+    display: inline-block;
+    padding: 5px;
+}
+
+.comment-section summary:hover, .reply-section summary:hover {
+    text-decoration: underline;
+}
