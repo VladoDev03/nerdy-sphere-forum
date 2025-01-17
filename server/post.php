@@ -9,6 +9,7 @@ if (!isset($_GET['id'])) {
 require_once "configuration/database.php";
 require_once "utils/db_post_data.php";
 
+$currentUserId = $_SESSION['user_id'];
 $postId = intval($_GET['id']);
 
 $postSql = "
@@ -62,8 +63,10 @@ $conn->close();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= htmlspecialchars($post['title']) ?></title>
     <link rel="stylesheet" href="styles/index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="js/formatters.js" defer></script>
     <script src="js/index.js" defer></script>
+    <script src="js/delete-comment.js" defer></script>
 </head>
 <body>
 <?php include 'includes/navbar.php'; ?>

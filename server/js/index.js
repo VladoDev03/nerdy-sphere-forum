@@ -68,14 +68,15 @@ Object.values(buttons).forEach(button => button.addEventListener('click', (e) =>
 const addElement = (parentElementId, ids, content) => {
     const section = document.getElementById(parentElementId);
     const commentDiv = document.createElement('div');
+    const emptyDiv = document.createElement('div');
 
     const userP = createP('comment-user', content.username + ':');
     const contentP = createP('comment-content', content.content);
     const infoP = createP('comment-info', 'Posted at: ' + content.time);
 
-    commentDiv.appendChild(userP);
-    commentDiv.appendChild(contentP);
-    commentDiv.appendChild(infoP);
+    emptyDiv.appendChild(userP);
+    emptyDiv.appendChild(contentP);
+    emptyDiv.appendChild(infoP);
 
     if (ids.parentId) {
         commentDiv.classList.add('comment-reply');
@@ -83,7 +84,8 @@ const addElement = (parentElementId, ids, content) => {
         commentDiv.classList.add('comment');
     }
 
-    section.appendChild(commentDiv)
+    commentDiv.appendChild(emptyDiv);
+    section.appendChild(commentDiv);
 };
 
 const createP = (classToAdd, content) => {
