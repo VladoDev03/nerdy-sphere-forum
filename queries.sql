@@ -246,4 +246,20 @@ WHERE p.id = 23;
 
 SELECT * FROM comment AS c
 INNER JOIN post AS p ON p.id = c.post_id
-WHERE c.post_id = 6;
+WHERE c.post_id = 23;
+
+# Get all posts but those of the current logged in user
+SELECT
+	p.id,
+	p.title,
+	p.content,
+	p.category,
+	p.created_at,
+	u.id AS user_id,
+	u.username,
+	count(c.id) AS comments_count
+FROM post AS p
+LEFT JOIN user AS u ON u.id = p.user_id
+LEFT JOIN comment AS c ON c.post_id = p.id
+WHERE u.id <> '4'
+GROUP BY p.id;

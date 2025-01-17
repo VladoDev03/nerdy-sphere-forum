@@ -8,6 +8,8 @@ if (!isset($_SESSION['user'])) {
 require_once "configuration/database.php";
 require_once "utils/db_post_data.php";
 
+$currentUserId = $_SESSION['user_id'];
+
 $postSql = "
     SELECT
         p.id,
@@ -21,6 +23,7 @@ $postSql = "
     FROM post AS p
     LEFT JOIN user AS u ON u.id = p.user_id
     LEFT JOIN comment AS c ON c.post_id = p.id
+    WHERE u.id <> '$currentUserId'
     GROUP BY p.id;
 ";
 
