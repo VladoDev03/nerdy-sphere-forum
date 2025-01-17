@@ -16,18 +16,18 @@ $postSql = "
         p.created_at,
         u.id AS user_id,
         u.username,
-        COUNT(DISTINCT c.id) AS comments_count,
-        COUNT(DISTINCT r.id) AS replies_count
+        count(c.id) AS comments_count
     FROM post AS p
-    INNER JOIN user AS u ON u.id = p.user_id
-    LEFT JOIN comment AS c ON c.post_id = p.id AND c.parent_comment_id IS NULL
-    LEFT JOIN comment AS r ON r.post_id = p.id AND r.parent_comment_id IS NOT NULL
+    LEFT JOIN user AS u ON u.id = p.user_id
+    LEFT JOIN comment AS c ON c.post_id = p.id
     GROUP BY p.id;
 ";
 
 $postStmt = $conn->prepare($postSql);
 $postStmt->execute();
-$postStmt->bind_result($postId, $title, $content, $category, $createdAt, $userId, $username, $commentsCount, $repliesCount);
+$postStmt->bind_result($postId, $title, $content, $category, $createdAt, $userId, $username, $commentsCount);
+
+echo $commentsCount;
 
 $postData = [];
 
@@ -40,8 +40,7 @@ while ($postStmt->fetch()) {
         'created_at' => $createdAt,
         'user_id' => $userId,
         'username' => $username,
-        'comments_count' => $commentsCount,
-        'replies_count' => $repliesCount
+        'comments_count' => $commentsCount
     ];
 }
 
@@ -225,7 +224,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         </form>
         <div id="response"></div>
 
-        <!--        --><?php //if (count($post['comments']) > 0): ?>
         <details id="comment-section-<?= $post['id'] ?>" class="comment-section">
             <summary>View Comments (<?= $post['comments_count'] ?>)</summary>
             <?php foreach ($post['comments'] as $comment): ?>
@@ -241,23 +239,24 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                         <button id="submit-reply-<?= $comment['id'] ?>" class="submit-reply">Send Reply</button>
                     </form>
 
-                    <!--                        --><?php //if (count($comment['replies']) > 0): ?>
-                    <details id="reply-section-<?= $comment['id'] ?>">
-                        <summary>View Replies (<?= $post['replies_count'] ?>)</summary>
-                        <?php foreach ($comment['replies'] as $reply): ?>
-                            <div class="comment-reply">
-                                <p class="comment-user"><?= $reply['username'] ?>:</p>
-                                <p class="comment-content"><?= $reply['content'] ?></p>
-                                <p class="comment-info">Posted at: <?= $reply['created_at'] ?></p>
-                            </div>
-                        <?php endforeach; ?>
-                    </details>
-                    <!--                        --><?php //endif; ?>
+                    <div id="reply-section-<?= $comment['id'] ?>">
+                        <?php if (count($comment['replies']) > 0): ?>
+                            <details>
+                                <summary>View Replies</summary>
+                                <?php foreach ($comment['replies'] as $reply): ?>
+                                    <div class="comment-reply">
+                                        <p class="comment-user"><?= $reply['username'] ?>:</p>
+                                        <p class="comment-content"><?= $reply['content'] ?></p>
+                                        <p class="comment-info">Posted at: <?= $reply['created_at'] ?></p>
+                                    </div>
+                                <?php endforeach; ?>
+                            </details>
+                        <?php endif; ?>
+                    </div>
                 </div>
 
             <?php endforeach; ?>
         </details>
-        <!--        --><?php //endif; ?>
     </div>
 <?php endforeach; ?>
 <script>
