@@ -48,8 +48,7 @@ body {
 
 .comment-section {
     margin-top: 15px;
-    border-bottom: 2px solid #333;
-    border-top: 2px solid #333;
+    /*border-top: 2px solid #333;*/
 }
 
 .content,
@@ -73,11 +72,11 @@ body {
 .comment-reply {
     padding: 5px;
     margin-bottom: 15px;
+    border-left: 2px solid;
 }
 
 .comment-reply {
     margin-left: 25px;
-    border-left: 2px solid;
     margin-top: 10px;
 }
 

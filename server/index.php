@@ -229,8 +229,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         </form>
         <div id="response"></div>
 
-        <?php if (count($post['comments']) > 0): ?>
-            <div class="comment-section">
+<!--        --><?php //if (count($post['comments']) > 0): ?>
+            <div id="comment-section-<?= $post['id'] ?>" class="comment-section">
                 <?php foreach ($post['comments'] as $comment): ?>
                     <div class="comment">
                         <p class="comment-user"><?= $comment['username'] ?>:</p>
@@ -244,23 +244,26 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                             <button id="submit-reply-<?= $comment['id'] ?>" class="submit-reply">Send Reply</button>
                         </form>
 
-                        <div class="comment-replies">
-                            <?php foreach ($comment['replies'] as $reply): ?>
-                                <div class="comment-reply">
-                                    <p class="comment-user"><?= $reply['username'] ?>:</p>
-                                    <p class="comment-content"><?= $reply['content'] ?></p>
-                                    <p class="comment-info">Posted at: <?= $reply['created_at'] ?></p>
-                                </div>
-                            <?php endforeach; ?>
-                        </div>
+<!--                        --><?php //if (count($comment['replies']) > 0): ?>
+                            <div id="reply-section-<?= $comment['id'] ?>">
+                                <?php foreach ($comment['replies'] as $reply): ?>
+                                    <div class="comment-reply">
+                                        <p class="comment-user"><?= $reply['username'] ?>:</p>
+                                        <p class="comment-content"><?= $reply['content'] ?></p>
+                                        <p class="comment-info">Posted at: <?= $reply['created_at'] ?></p>
+                                    </div>
+                                <?php endforeach; ?>
+                            </div>
+<!--                        --><?php //endif; ?>
                     </div>
 
                 <?php endforeach; ?>
             </div>
-        <?php endif; ?>
+<!--        --><?php //endif; ?>
     </div>
 <?php endforeach; ?>
 <script>
+    const currentUsername = '<?= $_SESSION['user'] ?>';
     const currentUserId = <?= $_SESSION['user_id'] ?>;
 </script>
 </body>
