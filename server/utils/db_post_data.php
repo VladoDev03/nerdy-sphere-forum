@@ -62,7 +62,7 @@ function fetchComments($conn, $postId) {
 
     return $comments;
 }
-function fetchReplies($post, $conn) {
+function fetchReplies($conn, $post) {
     foreach ($post['comments'] as $commentIndex => $comment) {
         $commentId = $comment['id'];
 
