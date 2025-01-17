@@ -192,3 +192,14 @@ SELECT
 FROM comment AS c
 INNER JOIN user AS u ON u.id = c.user_id
 WHERE c.parent_comment_id = '1';
+
+# Get user posts and their comments count
+SELECT
+	p.id,
+    p.title,
+    p.created_at,
+    count(*) AS comments_count
+FROM post AS p
+INNER JOIN comment AS c ON c.post_id = p.id
+WHERE p.user_id = '4'
+GROUP BY p.id;
