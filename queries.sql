@@ -174,8 +174,8 @@ SELECT
 	u.username,
     count(c.id) AS comments_count
 FROM post AS p
-INNER JOIN user AS u ON u.id = p.user_id
-INNER JOIN comment AS c ON c.post_id = p.id
+LEFT JOIN user AS u ON u.id = p.user_id
+LEFT JOIN comment AS c ON c.post_id = p.id
 GROUP BY p.id;
 
 # Get post images
@@ -215,7 +215,7 @@ SELECT
     p.created_at,
     count(*) AS comments_count
 FROM post AS p
-INNER JOIN comment AS c ON c.post_id = p.id
+LEFT JOIN comment AS c ON c.post_id = p.id
 WHERE p.user_id = '4'
 GROUP BY p.id;
 
@@ -226,7 +226,7 @@ SELECT
     p.created_at,
     count(*) AS comments_count
 FROM post AS p
-INNER JOIN comment AS c ON c.post_id = p.id
+LEFT JOIN comment AS c ON c.post_id = p.id
 GROUP BY p.id;
 
 # Get post by id

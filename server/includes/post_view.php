@@ -25,7 +25,7 @@
         <summary>View Comments (<?= $post['comments_count'] ?>)</summary>
         <?php foreach ($post['comments'] as $comment): ?>
             <div class="comment">
-                <?php if ($comment['userId'] === $currentUserId): ?>
+                <?php if ($comment['userId'] === $currentUserId || $post['user_id'] === $currentUserId): ?>
                 <div class="comment-icons">
                     <i class="fas fa-edit edit-icon edit" data-id="<?= $comment['id'] ?>"></i>
                     <i class="fas fa-trash-alt delete-icon delete-comment-icon delete" data-id="<?= $comment['id'] ?>"></i>
@@ -48,7 +48,7 @@
                                 <summary>View Replies</summary>
                                 <?php foreach ($comment['replies'] as $reply): ?>
                                     <div class="comment-reply">
-                                        <?php if ($reply['userId'] === $currentUserId): ?>
+                                        <?php if ($reply['userId'] === $currentUserId || $post['user_id'] === $currentUserId): ?>
                                         <div class="reply-icons">
                                             <i class="fas fa-edit edit-icon edit" data-id="<?= $comment['id'] ?>"></i>
                                             <i class="fas fa-trash-alt delete-icon delete-reply-icon delete" data-id="<?= $reply['id'] ?>"></i>

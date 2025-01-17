@@ -26,7 +26,6 @@ deleteIcons.forEach(icon => {
         })
             .then(res => res.text())
             .then(res => {
-                console.log(res);
                 if (deleteType === 'comment') {
                     e.target.closest('.comment').remove();
                 } else if (deleteType === 'reply') {

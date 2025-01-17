@@ -14,9 +14,9 @@ $postSql = "
 	    p.id,
         p.title,
         p.created_at,
-        count(*) AS comments_count
+        count(c.id) AS comments_count
     FROM post AS p
-    INNER JOIN comment AS c ON c.post_id = p.id
+    LEFT JOIN comment AS c ON c.post_id = p.id
     WHERE p.user_id = '$userId'
     GROUP BY p.id;
 ";
