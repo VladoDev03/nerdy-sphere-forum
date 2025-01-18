@@ -1,3 +1,4 @@
+const currentPort = window.location.port;
 const editIcons = document.querySelectorAll('.edit-icon');
 
 editIcons.forEach(icon => {
@@ -7,6 +8,6 @@ editIcons.forEach(icon => {
 
         const postId = e.target.dataset.id;
 
-        window.location = `http://localhost:63342/server/edit_post.php?id=${postId}`;
+        window.location = `http://localhost:${currentPort}/server/edit_post.php?id=${postId}`;
     });
 });

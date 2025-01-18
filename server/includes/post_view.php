@@ -27,7 +27,6 @@
             <div class="comment">
                 <?php if ($comment['userId'] === $currentUserId || $post['user_id'] === $currentUserId): ?>
                 <div class="comment-icons">
-                    <i class="fas fa-edit edit-icon edit" data-id="<?= $comment['id'] ?>"></i>
                     <i class="fas fa-trash-alt delete-icon delete-comment-icon delete" data-id="<?= $comment['id'] ?>"></i>
                 </div>
                 <?php endif; ?>
@@ -50,7 +49,6 @@
                                     <div class="comment-reply">
                                         <?php if ($reply['userId'] === $currentUserId || $post['user_id'] === $currentUserId): ?>
                                         <div class="reply-icons">
-                                            <i class="fas fa-edit edit-icon edit" data-id="<?= $comment['id'] ?>"></i>
                                             <i class="fas fa-trash-alt delete-icon delete-reply-icon delete" data-id="<?= $reply['id'] ?>"></i>
                                         </div>
                                         <?php endif; ?>
