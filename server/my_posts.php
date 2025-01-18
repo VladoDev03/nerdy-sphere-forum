@@ -63,7 +63,6 @@ $conn->close();
         <a href="post.php?id=<?= $post['id'] ?>" class="post-link">
         <div class="post">
             <div class="post-icons">
-<!--                <a href="edit_post.php?id=--><?php //= $post['id'] ?><!--"></a>-->
                 <i class="fas fa-edit edit-icon edit" data-id="<?= $post['id'] ?>"></i>
                 <i class="fas fa-trash-alt delete-icon delete" data-id="<?= $post['id'] ?>"></i>
             </div>

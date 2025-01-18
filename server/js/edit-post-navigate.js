@@ -5,6 +5,8 @@ editIcons.forEach(icon => {
         e.stopPropagation();
         e.preventDefault();
 
-        window.location = 'http://localhost:63342/server/edit_post.php?id=47';
+        const postId = e.target.dataset.id;
+
+        window.location = `http://localhost:63342/server/edit_post.php?id=${postId}`;
     });
 });

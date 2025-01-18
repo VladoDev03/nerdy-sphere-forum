@@ -47,8 +47,6 @@ $post = [
 ];
 
 $post['images'] = fetchImages($conn, $postId);
-$post['comments'] = fetchComments($conn, $postId);
-$post = fetchReplies($conn, $post);
 
 $errors = [];
 
@@ -97,13 +95,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>New Post</title>
     <link rel="stylesheet" href="styles/forms.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="js/edit-post.js" defer></script>
 </head>
 <body>
 
 <div class="container">
     <h1 class="form-title">Edit Post</h1>
-    <form action="edit_post.php?id=<?= $post["id"]; ?>" method="POST" enctype="multipart/form-data">
+    <form id="edit-form" action="edit_post.php?id=<?= $post["id"]; ?>" method="POST" enctype="multipart/form-data">
         <div class="form-group">
             <label for="title">Title:</label>
             <input type="text" id="title" name="title" placeholder="Edit post title" required value="<?= $post["title"]; ?>">
@@ -132,6 +131,16 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 <option value="Series">Series</option>
             </select>
         </div>
+        <?php if (isset($post['images'])): ?>
+            <div class="post-images">
+                <?php foreach ($post['images'] as $image): ?>
+                    <div class="image-container" data-image-id="<?= $image['id'] ?>" data-post-id="<?= $post['id'] ?>">
+                        <i class="fas fa-trash-alt delete-icon delete"></i>
+                        <img class="image" src="<?= $image['url'] ?>" alt="Post Image">
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        <?php endif; ?>
         <div class="form-group">
             <button type="submit">Edit Post</button>
         </div>

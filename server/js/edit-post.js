@@ -3,23 +3,44 @@ const textarea = document.getElementById('content');
 
 textarea.value = textAreaValue.value;
 
+const imageElements = document.querySelectorAll('.image-container');
 
+const imagesToDelete = [];
 
-// const postId = e.target.dataset.id;
-// const userConfirmed = confirm('Are you sure you want to delete this post?');
+imageElements.forEach(i => {
+    i.addEventListener('click', e => {
+        const imageId = i.getAttribute('data-image-id');
+        const postId = i.getAttribute('data-post-id');
 
+        const userConfirmed = confirm('Are you sure you want to delete this image?');
 
-// const formData = new FormData();
-// formData.append('post_id', postId);
+        if (!userConfirmed) {
+            return;
+        }
 
-// fetch('../utils/db_delete_post.php', {
-//     method: 'POST',
-//     body: formData
-// })
-//     .then(res => res.text())
-//     .then(res => {
-//         e.target.closest('.container').remove();
-//     })
-//     .catch(err => {
-//         alert('An error occurred. ' + err);
-//     });
+        imagesToDelete.push(imageId);
+        e.target.closest('.image-container').remove();
+    });
+});
+
+const submitEdit = document.getElementById('edit-form');
+
+submitEdit.addEventListener('submit', e => {
+    const formData = new FormData();
+
+    imagesToDelete.forEach((item, index) => {
+        formData.append(`array[${index}]`, item);
+    });
+
+    fetch('../utils/db_delete_image.php', {
+        method: 'POST',
+        body: formData
+    })
+        .then(res => res.text())
+        .then(res => {
+            console.log(res);
+        })
+        .catch(err => {
+            alert('An error occurred. ' + err);
+        });
+})
