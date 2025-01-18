@@ -119,6 +119,9 @@ DELETE FROM comment_tag;
 DELETE FROM post_image;
 SET SQL_SAFE_UPDATES = 1;
 
+SELECT * FROM user
+WHERE username = 'vladsto';
+
 DELETE FROM user
 WHERE username = 'vladsto';
 
@@ -263,3 +266,14 @@ LEFT JOIN user AS u ON u.id = p.user_id
 LEFT JOIN comment AS c ON c.post_id = p.id
 WHERE u.id <> '4'
 GROUP BY p.id;
+
+SELECT * FROM post
+WHERE id = 47;
+
+UPDATE post
+SET 
+    title = 'Updated Title',
+    content = 'Updated content goes here.',
+    category = 'Books'
+WHERE 
+    id = 47;
