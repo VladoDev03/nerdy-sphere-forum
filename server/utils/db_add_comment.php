@@ -20,8 +20,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->bind_param("siii", $content, $postId, $userId, $parentId);
 
     if ($stmt->execute()) {
+        $insertedCommentId = $stmt->insert_id;
+
+        echo json_encode([
+            'id' => $insertedCommentId
+        ]);
+
         exit();
     } else {
+        echo json_encode(['error' => 'Something went wrong. Please try again later.']);
         $errors[] = "Something went wrong. Please try again later.";
     }
 

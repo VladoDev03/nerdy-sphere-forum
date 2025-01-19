@@ -19,7 +19,6 @@
                       placeholder="Add a comment..."></textarea>
         <button id="submit-comment-<?= $post['id'] ?>" class="submit-comment">Send Comment</button>
     </form>
-    <div id="response"></div>
 
     <details id="comment-section-<?= $post['id'] ?>" class="comment-section">
         <summary>View Comments (<?= $post['comments_count'] ?>)</summary>
