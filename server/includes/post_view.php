@@ -18,7 +18,7 @@
                 <i class="fas fa-share-alt share-icon share" data-id="<?= $post['id'] ?>"
                    data-url="post.php?id=<?= $post['id'] ?>"></i>
             </div>
-            <p class="post-info">Posted by: <?= $post['username'] ?> | Category: <?= $post['category'] ?> | Posted
+            <p class="post-info">Posted by: <a class="user-posts-link" href="<?= 'user_posts.php?id=' . $post['user_id'] ?>"><?= $post['username'] ?></a> | Category: <?= $post['category'] ?> | Posted
                 at: <?= $post['created_at'] ?></p>
             <h2 class="title"><?= $post['title'] ?></h2>
             <p class="content"><?= $post['content'] ?></p>

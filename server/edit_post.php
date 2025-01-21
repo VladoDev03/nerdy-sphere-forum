@@ -28,7 +28,7 @@ $stmt->execute();
 $stmt->bind_result($oldTitle, $oldContent, $oldCategory, $userId);
 
 if (!$stmt->fetch()) {
-    header('Location: my_posts.php');
+    header('Location: user_posts.php');
     exit();
 }
 
@@ -77,7 +77,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
             $conn->commit();
 
-            header("Location: my_posts.php");
+            header("Location: user_posts.php");
             exit();
         } else {
             $errors[] = "Something went wrong. Please try again later.";
@@ -145,7 +145,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             <button type="submit">Edit Post</button>
         </div>
         <div class="form-group">
-            <button class="cancel-edit-container" type="button"><a href="my_posts.php" class="cancel-edit">Cancel</a></button>
+            <button class="cancel-edit-container" type="button"><a href="user_posts.php" class="cancel-edit">Cancel</a></button>
         </div>
     </form>
 </div>

@@ -70,6 +70,14 @@ body {
     margin: 10px 0;
 }
 
+.user-posts-link {
+    padding: 2px 4px;
+    color: cornflowerblue;
+    font-weight: bold;
+    text-decoration: none;
+    font-size: 1.2em;
+}
+
 .content {
     font-weight: bold;
     font-size: larger;

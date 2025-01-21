@@ -75,7 +75,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
             $conn->commit();
 
-            header("Location: my_posts.php");
+            header("Location: user_posts.php");
             exit();
         } else {
             $errors[] = "Something went wrong. Please try again later.";
