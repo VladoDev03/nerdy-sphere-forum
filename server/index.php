@@ -80,12 +80,14 @@ foreach ($posts as $postIndex => $post) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NerdySphere_Forum</title>
     <link rel="stylesheet" href="styles/index.css">
+    <link rel="stylesheet" href="styles/modal.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="js/formatters.js" defer></script>
     <script src="js/delete-comment.js" defer></script>
     <script src="js/index.js" defer></script>
     <script src="js/share-post.js" defer></script>
     <script src="js/vote.js" defer></script>
+    <script src="js/modal.js" defer></script>
 </head>
 <body>
 
@@ -96,5 +98,6 @@ foreach ($posts as $postIndex => $post) {
 <?php endforeach; ?>
 
 <?php include 'includes/footer.php'; ?>
+<?php include 'includes/modal.php'; ?>
 </body>
 </html>

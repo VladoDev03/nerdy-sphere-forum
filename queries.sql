@@ -319,3 +319,92 @@ SELECT
 	SUM(CASE WHEN reaction = 'Dislike' THEN 1 ELSE 0 END) AS dislikeCount
 FROM user_reaction 
 WHERE post_id = 1;
+
+# Demo
+INSERT INTO user (email, username, first_name, last_name, password_hash) VALUES
+('alice@example.com', 'alice123', 'Alice', 'Smith', 'hashedpassword1'),
+('bob@example.com', 'bobby', 'Bob', 'Johnson', 'hashedpassword2'),
+('charlie@example.com', 'charlie88', 'Charlie', 'Brown', 'hashedpassword3'),
+('dave@example.com', 'davey', 'Dave', 'Williams', 'hashedpassword4'),
+('eve@example.com', 'eve234', 'Eve', 'Davis', 'hashedpassword5'),
+('frank@example.com', 'frankly', 'Frank', 'Garcia', 'hashedpassword6'),
+('grace@example.com', 'graceful', 'Grace', 'Martinez', 'hashedpassword7'),
+('hank@example.com', 'hankster', 'Hank', 'Rodriguez', 'hashedpassword8'),
+('iris@example.com', 'iris98', 'Iris', 'Lewis', 'hashedpassword9'),
+('jack@example.com', 'jacky', 'Jack', 'Walker', 'hashedpassword10');
+
+INSERT INTO post (title, content, category, user_id) VALUES
+('Top 10 Video Games of 2024', 'A list of the best games of the year.', 'Video Games', 1),
+('Best Fantasy Books', 'Explore the best fantasy novels of the decade.', 'Books', 2),
+('Manga Recommendations', 'Must-read manga for newcomers.', 'Manga', 3),
+('Superhero Comics You Should Read', 'A guide to the best superhero comics.', 'Comics', 4),
+('Upcoming Anime in 2025', 'The most anticipated anime series.', 'Anime', 5),
+('Cartoon Classics', 'The timeless cartoons everyone should watch.', 'Cartoons', 6),
+('The Art of Animation', 'The evolution of animation over the years.', 'Animations', 7),
+('Best Board Games for Families', 'Family-friendly board games.', 'Board Games', 8),
+('Top Music Albums of 2024', 'The best albums released this year.', 'Music', 9),
+('Challenging Puzzles', 'Brain-teasers that will test your limits.', 'Puzzles', 10),
+('Must-Watch Movies', 'Movies you should add to your watchlist.', 'Movies', 1),
+('Card Games for Parties', 'The best card games for social gatherings.', 'Card Games', 2),
+('TV Series to Binge', 'Series that you won’t be able to stop watching.', 'Series', 3);
+
+INSERT INTO comment (content, post_id, user_id, parent_comment_id) VALUES
+('Great list! I agree with your top pick.', 1, 2, NULL),
+('I love fantasy books, thanks for the recommendations!', 2, 3, NULL),
+('This is so helpful for a manga newbie like me!', 3, 4, NULL),
+('Superheroes are my favorite! Great picks.', 4, 5, NULL),
+('Can’t wait for these anime shows!', 5, 6, NULL),
+('Nostalgia! Cartoons from my childhood.', 6, 7, NULL),
+('Animation is truly an art form.', 7, 8, NULL),
+('Our family loves board games! Thanks for the tips.', 8, 9, NULL),
+('This music list is spot on!', 9, 10, NULL),
+('I’ve been looking for challenging puzzles, thanks!', 10, 1, NULL),
+('Adding these movies to my watchlist!', 11, 2, NULL),
+('Card games are a hit at our parties.', 12, 3, NULL),
+('Binge-worthy series! Just what I needed.', 13, 4, NULL),
+('I think this game should’ve been number one.', 1, 3, 1),
+('Do you have more fantasy book suggestions?', 2, 4, 2);
+
+INSERT INTO post_image (post_id, image_url) VALUES
+(1, 'https://res.cloudinary.com/dtqmlqc0d/image/upload/v1737494576/forum/doom_zh2zkd.webp'),
+(1, 'https://res.cloudinary.com/dtqmlqc0d/image/upload/v1737493390/forum/gta_uwi4gk.jpg'),
+(1, 'https://res.cloudinary.com/dtqmlqc0d/image/upload/v1737493390/forum/elden_ring_ebtzlx.jpg'),
+(2, 'https://res.cloudinary.com/dtqmlqc0d/image/upload/v1737493390/forum/hail_mary_o8hp5j.jpg'),
+(2, 'https://res.cloudinary.com/dtqmlqc0d/image/upload/v1737493390/forum/i_robot_skdelp.jpg'),
+(3, 'https://res.cloudinary.com/dtqmlqc0d/image/upload/v1737493390/forum/fullmetal_alchemist_t5jggw.jpg'),
+(3, 'https://res.cloudinary.com/dtqmlqc0d/image/upload/v1737493389/forum/demon_slayer_yppkiq.webp'),
+(4, 'https://res.cloudinary.com/dtqmlqc0d/image/upload/v1737495232/forum/superman_l3jmhg.jpg'),
+(5, 'https://res.cloudinary.com/dtqmlqc0d/image/upload/v1737494897/forum/AttackOnTitan_Anime_ColossusTitan_Eren_fixed_wqxiuv.jpg'),
+(6, 'https://res.cloudinary.com/dtqmlqc0d/image/upload/v1737493391/forum/Tom-and-jerry-1-_mmj6af.webp'),
+(6, 'https://res.cloudinary.com/dtqmlqc0d/image/upload/v1737493391/forum/mickey_mouse_fik11i.jpg'),
+(7, 'https://res.cloudinary.com/dtqmlqc0d/image/upload/v1737493390/forum/spiderman-marvel-i41725_wrxoaq.jpg'),
+(8, 'https://res.cloudinary.com/dtqmlqc0d/image/upload/v1737493392/forum/dnd_vcreg9.webp'),
+(9, 'https://res.cloudinary.com/dtqmlqc0d/image/upload/v1737493391/forum/queen_ithzud.jpg'),
+(9, 'https://res.cloudinary.com/dtqmlqc0d/image/upload/v1737493391/forum/metallica_ev4ola.webp'),
+(10, 'https://res.cloudinary.com/dtqmlqc0d/image/upload/v1737493391/forum/rubik_kqsvjb.jpg'),
+(11, 'https://res.cloudinary.com/dtqmlqc0d/image/upload/v1737493391/forum/interstellar_vc5elr.jpg'),
+(11, 'https://res.cloudinary.com/dtqmlqc0d/image/upload/v1737493389/forum/spiderman_el1cia.webp'),
+(11, 'https://res.cloudinary.com/dtqmlqc0d/image/upload/v1737493389/forum/MCDDEAN_WD040_e4rhxe.webp'),
+(11, 'https://res.cloudinary.com/dtqmlqc0d/image/upload/v1737493389/forum/Iron_Man_Infobox_hyz5gp.webp'),
+(11, 'https://res.cloudinary.com/dtqmlqc0d/image/upload/v1737493389/forum/Deadpool__2016_poster_rjz2d6.png'),
+(11, 'https://res.cloudinary.com/dtqmlqc0d/image/upload/v1737493389/forum/Thor_in_LoveAndThunder_Poster_je9do2.webp'),
+(11, 'https://res.cloudinary.com/dtqmlqc0d/image/upload/v1737495233/forum/topgun_oqasqo.jpg'),
+(12, 'https://res.cloudinary.com/dtqmlqc0d/image/upload/v1737493391/forum/uno_h4jmyt.jpg'),
+(13, 'https://res.cloudinary.com/dtqmlqc0d/image/upload/v1737493391/forum/Winter-is-coming-Wallpaper_gdsmch.jpg');
+
+INSERT INTO user_reaction (reaction, user_id, post_id) VALUES
+('Like', 1, 1),
+('Like', 2, 2),
+('Dislike', 3, 3),
+('Like', 4, 4),
+('Like', 5, 5),
+('Dislike', 6, 6),
+('Like', 7, 7),
+('Like', 8, 8),
+('Dislike', 9, 9),
+('Like', 10, 10),
+('Like', 1, 11),
+('Dislike', 2, 12),
+('Like', 3, 13),
+('Like', 4, 1),
+('Dislike', 5, 2);
