@@ -57,6 +57,7 @@ $post = [
 
 $post['images'] = fetchImages($conn, $postId);
 $post['comments'] = fetchComments($conn, $postId);
+$post['votes'] = fetchVotesCount($conn, $postId, $currentUserId);
 $post = fetchReplies($conn, $post);
 
 $conn->close();

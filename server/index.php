@@ -57,15 +57,13 @@ foreach ($postData as $post) {
 
     $images = fetchImages($conn, $postId);
     $comments = fetchComments($conn, $postId);
+    $votesData = fetchVotesCount($conn, $postId, $currentUserId);
 
     $posts[] = array_merge($post, [
         'images' => $images,
-        'comments' => $comments
+        'comments' => $comments,
+        'votes' => $votesData
     ]);
-}
-
-foreach ($posts as $postIndex => $post) {
-    $posts[$postIndex] = fetchReplies($conn, $post);
 }
 
 foreach ($posts as $postIndex => $post) {

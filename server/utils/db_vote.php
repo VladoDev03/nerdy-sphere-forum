@@ -19,7 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $deleteStmt->bind_param("ii", $userId, $postId);
 
         if ($deleteStmt->execute()) {
-            $votesData = fetchVotesCount($conn, $postId);
+            $votesData = fetchVotesCount($conn, $postId, $userId);
 
             echo json_encode([
                 'success' => true,
@@ -62,7 +62,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             }
         }
 
-        $votesData = fetchVotesCount($conn, $postId);
+        $votesData = fetchVotesCount($conn, $postId, $checkedUserId);
 
         echo json_encode([
             'success' => true,

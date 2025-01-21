@@ -103,7 +103,14 @@ function fetchReplies($conn, $post) {
     return $post;
 }
 
-function fetchVotesCount($conn, $postId) {
+function fetchVotesCount($conn, $postId, $currentUserId) {
+    $userVoteStmt = $conn->prepare("SELECT reaction FROM user_reaction WHERE user_id = ? AND post_id = ?");
+    $userVoteStmt->bind_param("ii", $currentUserId, $postId);
+    $userVoteStmt->execute();
+    $userVoteStmt->bind_result($userVote);
+    $userVoteStmt->fetch();
+    $userVoteStmt->close();
+
     $countStmt = $conn->prepare("
         SELECT 
             SUM(CASE WHEN reaction = 'Like' THEN 1 ELSE 0 END) AS likeCount,
@@ -123,6 +130,7 @@ function fetchVotesCount($conn, $postId) {
         $voteDifference = $likeCount - $dislikeCount;
 
         return [
+            'userVote' => $userVote,
             'likeCount' => $likeCount,
             'dislikeCount' => $dislikeCount,
             'totalVotes' => $totalVotes,

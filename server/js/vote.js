@@ -16,11 +16,9 @@ document.querySelectorAll('.vote-button').forEach(button => {
             downvoteButton.classList.remove('downvoted');
             isVoteRemoved = true;
         } else {
-            // Clear previous vote styles
             upvoteButton.classList.remove('upvoted');
             downvoteButton.classList.remove('downvoted');
 
-            // Apply new vote styles
             if (voteType === 'Like') {
                 upvoteButton.classList.add('upvoted');
             } else {
@@ -43,7 +41,7 @@ document.querySelectorAll('.vote-button').forEach(button => {
             .then(data => {
                 const newCount = data.votesData.voteDifference;
 
-                console.log(data.votesData);
+                console.log(data);
 
                 document.getElementById(`vote-count-${postId}`).innerText = newCount;
                 console.log("Total votes", data.votesData.totalVotes);

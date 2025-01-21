@@ -57,7 +57,7 @@ body {
     transition: opacity 0.3s ease;
     pointer-events: none;
     z-index: 2;
-    color: red;
+    color: #dc3545;
 }
 
 .post-images .image-container:hover .delete-icon {
@@ -129,7 +129,8 @@ textarea:focus {
 }
 
 .error-input {
-    color: red;
+    color: #dc3545;
+    font-weight: bold;
 }
 
 button[type="submit"] {

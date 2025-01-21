@@ -120,7 +120,7 @@ body {
 
 .comment-icons .delete-icon:hover,
 .reply-icons .delete-icon:hover {
-    color: red;
+    color: #dc3545;
     transform: scale(1.1);
 }
 
@@ -203,7 +203,7 @@ body {
 }
 
 .downvoted i {
-    color: red;
+    color: #dc3545;
 }
 
 .comment-section, .reply-section {

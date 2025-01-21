@@ -1,15 +1,17 @@
 <div class="post">
     <div class="post-container">
         <div class="post-votes">
-            <button class="vote-button upvote" data-user-id="<?= $currentUserId ?>" data-post-id="<?= $post['id'] ?>">
-                <i class="fas fa-arrow-up"></i>
-            </button>
-            <span class="vote-count" id="vote-count-<?= $post['id'] ?>">
-                <?= htmlspecialchars($post['id']) ?>
+            <?php if ($currentUserId !== $post['user_id']): ?>
+                <button class="vote-button upvote <?= $post['votes']['userVote'] === 'Like' ? 'upvoted' : '' ?>" data-user-id="<?= $currentUserId ?>" data-post-id="<?= $post['id'] ?>">
+                    <i class="fas fa-arrow-up"></i>
+                </button>
+                <span class="vote-count" id="vote-count-<?= $post['id'] ?>">
+                <?= $post['votes']['voteDifference'] ?>
             </span>
-            <button class="vote-button downvote" data-user-id="<?= $currentUserId ?>" data-post-id="<?= $post['id'] ?>">
-                <i class="fas fa-arrow-down"></i>
-            </button>
+                <button class="vote-button downvote <?= $post['votes']['userVote'] === 'Dislike' ? 'downvoted' : '' ?>" data-user-id="<?= $currentUserId ?>" data-post-id="<?= $post['id'] ?>">
+                    <i class="fas fa-arrow-down"></i>
+                </button>
+            <?php endif; ?>
         </div>
         <div class="post-body">
             <div class="post-icons">
