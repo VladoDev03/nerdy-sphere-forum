@@ -101,6 +101,16 @@ header {
     transform: scale(1.1);
 }
 
+.post-icons .share:hover {
+    color: #007bff;
+    transform: scale(1.1);
+}
+
+.share-icon.fa-check,
+.share-icon.fa-check:hover {
+    color: #28a745;
+}
+
 @media (max-width: 600px) {
     .post-title {
         font-size: 1.2rem;

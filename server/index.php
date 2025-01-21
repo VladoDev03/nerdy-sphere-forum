@@ -82,6 +82,7 @@ foreach ($posts as $postIndex => $post) {
     <script src="js/formatters.js" defer></script>
     <script src="js/delete-comment.js" defer></script>
     <script src="js/index.js" defer></script>
+    <script src="js/share-post.js" defer></script>
 </head>
 <body>
 

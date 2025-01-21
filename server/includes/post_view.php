@@ -1,5 +1,9 @@
 <div class="post">
     <div class="post-body">
+        <div class="post-icons">
+            <i class="fas fa-share-alt share-icon share" data-id="<?= $post['id'] ?>"
+               data-url="post.php?id=<?= $post['id'] ?>"></i>
+        </div>
         <p class="post-info">Posted by: <?= $post['username'] ?> | Category: <?= $post['category'] ?> | Posted
             at: <?= $post['created_at'] ?></p>
         <h2 class="title"><?= $post['title'] ?></h2>
@@ -25,9 +29,10 @@
         <?php foreach ($post['comments'] as $comment): ?>
             <div class="comment">
                 <?php if ($comment['userId'] === $currentUserId || $post['user_id'] === $currentUserId): ?>
-                <div class="comment-icons">
-                    <i class="fas fa-trash-alt delete-icon delete-comment-icon delete" data-id="<?= $comment['id'] ?>"></i>
-                </div>
+                    <div class="comment-icons">
+                        <i class="fas fa-trash-alt delete-icon delete-comment-icon delete"
+                           data-id="<?= $comment['id'] ?>"></i>
+                    </div>
                 <?php endif; ?>
                 <div>
                     <p class="comment-user"><?= $comment['username'] ?>:</p>
@@ -47,9 +52,10 @@
                                 <?php foreach ($comment['replies'] as $reply): ?>
                                     <div class="comment-reply">
                                         <?php if ($reply['userId'] === $currentUserId || $post['user_id'] === $currentUserId): ?>
-                                        <div class="reply-icons">
-                                            <i class="fas fa-trash-alt delete-icon delete-reply-icon delete" data-id="<?= $reply['id'] ?>"></i>
-                                        </div>
+                                            <div class="reply-icons">
+                                                <i class="fas fa-trash-alt delete-icon delete-reply-icon delete"
+                                                   data-id="<?= $reply['id'] ?>"></i>
+                                            </div>
                                         <?php endif; ?>
                                         <div>
                                             <p class="comment-user"><?= $reply['username'] ?>:</p>

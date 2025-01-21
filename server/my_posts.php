@@ -50,6 +50,7 @@ $conn->close();
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="js/delete-post.js" defer></script>
     <script src="js/edit-post-navigate.js" defer></script>
+    <script src="js/share-post.js" defer></script>
 </head>
 <body>
 
@@ -63,6 +64,7 @@ $conn->close();
         <a href="post.php?id=<?= $post['id'] ?>" class="post-link">
         <div class="post">
             <div class="post-icons">
+                <i class="fas fa-share-alt share-icon share" data-id="<?= $post['id'] ?>" data-url="post.php?id=<?= $post['id'] ?>"></i>
                 <i class="fas fa-edit edit-icon edit" data-id="<?= $post['id'] ?>"></i>
                 <i class="fas fa-trash-alt delete-icon delete" data-id="<?= $post['id'] ?>"></i>
             </div>
