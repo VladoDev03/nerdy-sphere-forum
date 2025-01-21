@@ -68,6 +68,10 @@ foreach ($posts as $postIndex => $post) {
     $posts[$postIndex] = fetchReplies($conn, $post);
 }
 
+foreach ($posts as $postIndex => $post) {
+    $posts[$postIndex] = fetchReplies($conn, $post);
+}
+
 //echo json_encode($posts, JSON_PRETTY_PRINT);
 ?>
 
@@ -83,6 +87,7 @@ foreach ($posts as $postIndex => $post) {
     <script src="js/delete-comment.js" defer></script>
     <script src="js/index.js" defer></script>
     <script src="js/share-post.js" defer></script>
+    <script src="js/vote.js" defer></script>
 </head>
 <body>
 

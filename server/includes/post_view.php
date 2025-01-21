@@ -1,21 +1,34 @@
 <div class="post">
-    <div class="post-body">
-        <div class="post-icons">
-            <i class="fas fa-share-alt share-icon share" data-id="<?= $post['id'] ?>"
-               data-url="post.php?id=<?= $post['id'] ?>"></i>
+    <div class="post-container">
+        <div class="post-votes">
+            <button class="vote-button upvote" data-user-id="<?= $currentUserId ?>" data-post-id="<?= $post['id'] ?>">
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            <span class="vote-count" id="vote-count-<?= $post['id'] ?>">
+                <?= htmlspecialchars($post['id']) ?>
+            </span>
+            <button class="vote-button downvote" data-user-id="<?= $currentUserId ?>" data-post-id="<?= $post['id'] ?>">
+                <i class="fas fa-arrow-down"></i>
+            </button>
         </div>
-        <p class="post-info">Posted by: <?= $post['username'] ?> | Category: <?= $post['category'] ?> | Posted
-            at: <?= $post['created_at'] ?></p>
-        <h2 class="title"><?= $post['title'] ?></h2>
-        <p class="content"><?= $post['content'] ?></p>
-
-        <?php if (isset($post['images'])): ?>
-            <div class="post-images">
-                <?php foreach ($post['images'] as $image): ?>
-                    <img class="image" src="<?= $image['url'] ?>" alt="Post Image">
-                <?php endforeach; ?>
+        <div class="post-body">
+            <div class="post-icons">
+                <i class="fas fa-share-alt share-icon share" data-id="<?= $post['id'] ?>"
+                   data-url="post.php?id=<?= $post['id'] ?>"></i>
             </div>
-        <?php endif; ?>
+            <p class="post-info">Posted by: <?= $post['username'] ?> | Category: <?= $post['category'] ?> | Posted
+                at: <?= $post['created_at'] ?></p>
+            <h2 class="title"><?= $post['title'] ?></h2>
+            <p class="content"><?= $post['content'] ?></p>
+
+            <?php if (isset($post['images'])): ?>
+                <div class="post-images">
+                    <?php foreach ($post['images'] as $image): ?>
+                        <img class="image" src="<?= $image['url'] ?>" alt="Post Image">
+                    <?php endforeach; ?>
+                </div>
+            <?php endif; ?>
+        </div>
     </div>
 
     <form class="comment-form" action="../utils/db_add_comment.php" method="POST">

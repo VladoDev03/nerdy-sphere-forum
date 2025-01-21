@@ -73,6 +73,7 @@ $conn->close();
     <script src="js/formatters.js" defer></script>
     <script src="js/index.js" defer></script>
     <script src="js/delete-comment.js" defer></script>
+    <script src="js/vote.js" defer></script>
 </head>
 <body>
 <?php include 'includes/navbar.php'; ?>

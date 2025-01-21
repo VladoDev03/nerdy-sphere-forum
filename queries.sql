@@ -302,3 +302,20 @@ SET
     category = 'Books'
 WHERE 
     id = 47;
+    
+UPDATE user_reaction
+SET reaction = 'Like'
+WHERE user_id = 6 AND post_id = 1;
+    
+UPDATE user_reaction
+SET reaction = 'Dislike'
+WHERE user_id = 6 AND post_id = 1;
+
+SELECT * FROM user_reaction
+WHERE user_id = 6 AND post_id = 1;
+
+SELECT 
+	SUM(CASE WHEN reaction = 'Like' THEN 1 ELSE 0 END) AS likeCount,
+	SUM(CASE WHEN reaction = 'Dislike' THEN 1 ELSE 0 END) AS dislikeCount
+FROM user_reaction 
+WHERE post_id = 1;

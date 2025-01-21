@@ -102,3 +102,33 @@ function fetchReplies($conn, $post) {
 
     return $post;
 }
+
+function fetchVotesCount($conn, $postId) {
+    $countStmt = $conn->prepare("
+        SELECT 
+            SUM(CASE WHEN reaction = 'Like' THEN 1 ELSE 0 END) AS likeCount,
+            SUM(CASE WHEN reaction = 'Dislike' THEN 1 ELSE 0 END) AS dislikeCount
+        FROM user_reaction 
+        WHERE post_id = ?
+    ");
+
+    $countStmt->bind_param("i", $postId);
+
+    if ($countStmt->execute()) {
+        $countStmt->bind_result($likeCount, $dislikeCount);
+        $countStmt->fetch();
+        $countStmt->close();
+
+        $totalVotes = $likeCount + $dislikeCount;
+        $voteDifference = $likeCount - $dislikeCount;
+
+        return [
+            'likeCount' => $likeCount,
+            'dislikeCount' => $dislikeCount,
+            'totalVotes' => $totalVotes,
+            'voteDifference' => $voteDifference
+        ];
+    } else {
+        return null;
+    }
+}
