@@ -93,6 +93,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>New Post</title>
     <link rel="stylesheet" href="styles/forms.css">
+    <link rel="stylesheet" href="styles/image-preview.css">
+    <script src="js/image-preview.js" defer></script>
 </head>
 <body>
 <div class="container">
@@ -129,6 +131,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             <label for="images">Upload Images:</label>
             <input type="file" id="images" name="images[]" accept="image/*" multiple>
         </div>
+        <div id="image-preview"></div>
         <div class="form-group">
             <button type="submit">Create Post</button>
         </div>
