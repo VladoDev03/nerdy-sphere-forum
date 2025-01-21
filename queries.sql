@@ -65,18 +65,42 @@ CREATE TABLE post_image (
     FOREIGN KEY (post_id) REFERENCES post(id) ON DELETE CASCADE
 );
 
+CREATE TABLE user_reaction (
+	id INT AUTO_INCREMENT PRIMARY KEY,
+    reaction ENUM(
+        'Like',
+        'Dislike'
+    ) NOT NULL,
+    user_id INT NOT NULL,
+    post_id INT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE KEY unique_reaction (post_id, user_id),
+    FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE,
+    FOREIGN KEY (post_id) REFERENCES post(id) ON DELETE CASCADE
+);
+
 INSERT INTO user (email, username, first_name, last_name, password_hash, created_at)
 VALUES
     ('user1@example.com', 'user1', 'John', 'Doe', '$2y$10$EXAMPLESaltAndHash1', NOW()),
     ('user2@example.com', 'user2', 'Jane', 'Smith', '$2y$10$EXAMPLESaltAndHash2', NOW()),
     ('user3@example.com', 'user3', 'Alice', 'Johnson', '$2y$10$EXAMPLESaltAndHash3', NOW());
-
+    
+# I must register a new user before continuing with the insertions
 INSERT INTO post (title, content, category, user_id, created_at)
 VALUES
     ('Exploring the Latest in Video Games', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce convallis justo eget orci efficitur, eget fermentum justo tristique. Sed ut placerat nunc. Quisque vel mauris felis.', 'Video Games', 1, NOW()),
     ('The Future of Manga: Trends and Predictions', 'Nullam vehicula, justo vel cursus convallis, leo nisl fermentum dui, in tincidunt ligula neque eget turpis.', 'Manga', 3, NOW()),
     ('The Evolution of Anime: A Visual Journey', 'Curabitur ultricies dolor ac velit malesuada, nec fermentum erat mollis. Phasellus sit amet augue vitae est eleifend pretium.', 'Anime', 2, NOW()),
     ('The Future of RTX requirement in Video Games: Is... Inevitable', 'Nullam vehicula, justo vel cursus convallis, leo nisl fermentum dui, in tincidunt ligula neque eget turpis.', 'Video Games', 4, NOW());
+
+INSERT INTO user_reaction (reaction, user_id, post_id)
+VALUES
+	('Like', 1, 2),
+	('Dislike', 1, 3),
+	('Like', 2, 1),
+	('Dislike', 2, 3),
+	('Like', 3, 2),
+	('Dislike', 3, 1);
 
 INSERT INTO post_image (post_id, image_url)
 VALUES
@@ -110,13 +134,14 @@ SELECT * FROM post;
 SELECT * FROM comment;
 SELECT * FROM comment_tag;
 SELECT * FROM post_image;
+SELECT * FROM user_reaction;
 
 SET SQL_SAFE_UPDATES = 0;
 DELETE FROM user;
 DELETE FROM post;
 DELETE FROM comment;
 DELETE FROM comment_tag;
-DELETE FROM post_image;
+DELETE FROM user_reaction;
 SET SQL_SAFE_UPDATES = 1;
 
 SELECT * FROM user
